@@ -7,14 +7,14 @@
 
 使用方法  
 1、修改通讯参数  
-
+   
+      
 [SPService]#串口的参数  
 PortNum=1  
 StopBits=1  
 ByteSize=8  
 BaudRate=57600  
 Parity=0  
-
 
 [TCPService]#网口的参数  
 IP=192.168.4.100  
@@ -29,6 +29,7 @@ ReConnectWaitMillisecond=40
 2、自定义一个通讯任务结构体  
   结构体必须继承于Collector.ITaskContext  
   并按要求实现相关方法  
+    
      public interface ITaskContext  
     {    
         ///一个任务的唯一标识。  
@@ -73,7 +74,7 @@ Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collect
 添加任务：  
 1、创建你的TaskContext；  
     
-  ······创建一个读取数据的任务······  
+  ······创建一个读取数据的任务······    
   TestContext t = new TestContext();  
             t.TaskName = TaskName;//唯一标识  
             t.TX = tx;//tx为已经打包好的原始报文  
