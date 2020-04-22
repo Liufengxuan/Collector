@@ -24,13 +24,14 @@ Prot=8139
 ReadTimeOut=20  
 WriteTimeOut=20  
 #当与设备连接断开至下次重新连接的间隔时间 毫秒  
+  
 ReConnectWaitMillisecond=40  
 
 2、自定义一个通讯任务结构体  
   结构体必须继承于Collector.ITaskContext  
   并按要求实现相关方法  
     
-     public interface ITaskContext  
+    ` public interface ITaskContext  
     {    
         ///一个任务的唯一标识。  
         string TaskName { get; set; }  
@@ -51,7 +52,7 @@ ReConnectWaitMillisecond=40
  
         /// 接收后内部赋值   //原始报文  
         void SetRX(byte[] rx);  
-    }
+    }`
     
     
 3、创建一个工作实例。  
@@ -75,15 +76,29 @@ Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collect
 1、创建你的TaskContext；  
     
   ······创建一个读取数据的任务······    
-  TestContext t = new TestContext();  
-            t.TaskName = TaskName;//唯一标识  
-            t.TX = tx;//tx为已经打包好的原始报文  
-  task.AddOrUpdateTaskToQueue(t);  
-  //获取RX数据  
-   TestContext t = task.GetTask(s => { return s.TaskName.Equals("taskName"); });  
+  TestContext t = new TestContext();    
+  //唯一标识    
+  t.TaskName = TaskName;  
+  //tx为已经打包好的原始报文    
+  t.TX = tx;  
+  //添加  
+  task.AddOrUpdateTaskToQueue(t);    
+  //获取RX数据   
+  TestContext t = task.GetTask(s => { return s.TaskName.Equals("taskName"); });    
   
   
-   ······或者创建一个发送控制指令的任务······  
+   ······或者创建一个发送控制指令的任务······   
+    TestContext t = new TestContext();  
+    t.TaskName = tb_taskName.Text;  
+    t.TX = a;  
+    //只发送一次 如果不为ture 这个任务会被循环执行  
+    t.ExecuteOnce = true;  
+    //即刻发送  设置优先级使这个任务立即被执行一次，然后不管会不会成功 这个任务都会被降级为普通任务  
+    t.Priority = TaskPriority.High;  
+    t.IsTempTask = true;//临时任务 在调用查找该任务的同时会把该任务删除  ！：在查找方法返回结果值后、这个被查找的任务就被删除掉了  
+    task.AddOrUpdateTaskToQueue(t);  
+    
+    t.Priority = TaskPriority.High;对用需要
   
   
   
