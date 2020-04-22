@@ -97,11 +97,13 @@ ReConnectWaitMillisecond=40
     t.Priority = TaskPriority.High;  
     t.IsTempTask = true;//临时任务 在调用查找该任务的同时会把该任务删除  ！：在查找方法返回结果值后、这个被查找的任务就被删除掉了  
     task.AddOrUpdateTaskToQueue(t);  
-    ```
+```
     
-#定义用于处理通讯错误的委托方法    
- // 这个事件会传递出两个参数：异常信息和连续出现了几次异常    
- ``` task.ExceptionEvent += HandleError;   ```
+    
+    
+4、定义用于处理通讯错误的委托方法   
+这个事件会传递出两个参数：异常信息和连续出现了几次异常 
+``` task.ExceptionEvent += HandleError;  ```
 
 
 
