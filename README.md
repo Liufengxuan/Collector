@@ -8,7 +8,7 @@
 使用方法  
 1、修改通讯参数  
    
-      
+```      
 [SPService]#串口的参数  
 PortNum=1  
 StopBits=1  
@@ -25,7 +25,8 @@ ReadTimeOut=20
 WriteTimeOut=20  
 #当与设备连接断开至下次重新连接的间隔时间 毫秒  
   
-ReConnectWaitMillisecond=40  
+ReConnectWaitMillisecond=40 
+``` 
 
 2、自定义一个通讯任务结构体  
   结构体必须继承于Collector.ITaskContext  
@@ -61,23 +62,24 @@ ReConnectWaitMillisecond=40
 
 //需要传递一个通讯管道参数  
 //可以是串口的管道和网口套接字管道  
-Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collector.Channel.TcpChannel());  
+```Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collector.Channel.TcpChannel());  ```
    
    
  //定义用于处理通讯错误的委托方法    
  // 这个事件会传递出两个参数：异常信息和连续出现了几次异常    
-  task.ExceptionEvent += HandleError;   
+ ``` task.ExceptionEvent += HandleError;   ```
    
     
     
  //让任务跑起来     
- task.Run();  
+``` task.Run();  ```
  
  
 添加任务：  
 1、创建你的TaskContext；  
     
   ······创建一个读取数据的任务······    
+  ```
   TestContext t = new TestContext();    
   //唯一标识    
   t.TaskName = TaskName;  
@@ -87,9 +89,10 @@ Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collect
   task.AddOrUpdateTaskToQueue(t);    
   //获取RX数据   
   TestContext t = task.GetTask(s => { return s.TaskName.Equals("taskName"); });    
+  ```
   
-  
-   ······或者创建一个发送控制指令的任务······   
+   ······或者创建一个发送控制指令的任务······ 
+   ```
     TestContext t = new TestContext();  
     t.TaskName = tb_taskName.Text;  
     t.TX = a;  
@@ -99,8 +102,8 @@ Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collect
     t.Priority = TaskPriority.High;  
     t.IsTempTask = true;//临时任务 在调用查找该任务的同时会把该任务删除  ！：在查找方法返回结果值后、这个被查找的任务就被删除掉了  
     task.AddOrUpdateTaskToQueue(t);  
-    
-    t.Priority = TaskPriority.High;对用需要
+    ```
+     t.Priority = TaskPriority.High;对用需要
   
   
   
