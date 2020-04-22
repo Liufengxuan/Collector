@@ -31,7 +31,7 @@ ReConnectWaitMillisecond=40
   结构体必须继承于Collector.ITaskContext  
   并按要求实现相关方法  
     
-#```
+```
      public interface ITaskContext  
     {    
         ///一个任务的唯一标识。  
@@ -54,7 +54,7 @@ ReConnectWaitMillisecond=40
         /// 接收后内部赋值   //原始报文  
         void SetRX(byte[] rx);  
     }
-#```
+```
     
     
 3、创建一个工作实例。  
