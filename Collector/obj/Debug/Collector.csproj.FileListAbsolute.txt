@@ -1,0 +1,30 @@
+C:\Users\LFX\Desktop\Device\Collector\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\Device\Collector\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\Device\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\Device\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\Device\Collector\obj\Debug\Collector.dll
+C:\Users\LFX\Desktop\Device\Collector\obj\Debug\Collector.pdb
+C:\Users\fengxuan\Desktop\Device\Collector\bin\Debug\Collector.dll
+C:\Users\fengxuan\Desktop\Device\Collector\bin\Debug\Collector.pdb
+C:\Users\fengxuan\Desktop\Device\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\fengxuan\Desktop\Device\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\fengxuan\Desktop\Device\Collector\obj\Debug\Collector.dll
+C:\Users\fengxuan\Desktop\Device\Collector\obj\Debug\Collector.pdb
+C:\Users\LFX\Desktop\colloter\Device\Collector\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\colloter\Device\Collector\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\colloter\Device\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\colloter\Device\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\colloter\Device\Collector\obj\Debug\Collector.dll
+C:\Users\LFX\Desktop\colloter\Device\Collector\obj\Debug\Collector.pdb
+C:\Users\LFX\Desktop\colloter\20200419-2 Device\Collector\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\colloter\20200419-2 Device\Collector\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\colloter\20200419-2 Device\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\colloter\20200419-2 Device\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\colloter\20200419-2 Device\Collector\obj\Debug\Collector.dll
+C:\Users\LFX\Desktop\colloter\20200419-2 Device\Collector\obj\Debug\Collector.pdb
+C:\Users\LFX\Desktop\colloter\20200419-3 Device\Collector\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\colloter\20200419-3 Device\Collector\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\colloter\20200419-3 Device\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\colloter\20200419-3 Device\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\colloter\20200419-3 Device\Collector\obj\Debug\Collector.dll
+C:\Users\LFX\Desktop\colloter\20200419-3 Device\Collector\obj\Debug\Collector.pdb
