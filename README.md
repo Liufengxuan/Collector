@@ -60,19 +60,14 @@ ReConnectWaitMillisecond=40
     
 3、创建一个工作实例。  
 
-//需要传递一个通讯管道参数  
-//可以是串口的管道和网口套接字管道  
-```Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collector.Channel.TcpChannel());  ```
+  需要传递一个通讯管道参数  
+  可以是串口的管道和网口套接字管道  
+  ```Collector.Task<MyTaskContext> task=new Collector.Task<MyTaskContext>(new Collector.Channel.TcpChannel());  ```
    
-   
- //定义用于处理通讯错误的委托方法    
- // 这个事件会传递出两个参数：异常信息和连续出现了几次异常    
- ``` task.ExceptionEvent += HandleError;   ```
-   
+      
     
-    
- //让任务跑起来     
-``` task.Run();  ```
+  让任务跑起来     
+  ``` task.Run();  ```
  
  
 添加任务：  
@@ -90,7 +85,7 @@ ReConnectWaitMillisecond=40
   //获取RX数据   
   TestContext t = task.GetTask(s => { return s.TaskName.Equals("taskName"); });    
   ```
-  
+ 
    ······或者创建一个发送控制指令的任务······ 
    ```
     TestContext t = new TestContext();  
@@ -103,10 +98,15 @@ ReConnectWaitMillisecond=40
     t.IsTempTask = true;//临时任务 在调用查找该任务的同时会把该任务删除  ！：在查找方法返回结果值后、这个被查找的任务就被删除掉了  
     task.AddOrUpdateTaskToQueue(t);  
     ```
-     t.Priority = TaskPriority.High;对用需要
-  
-  
-  
+    
+#定义用于处理通讯错误的委托方法    
+ // 这个事件会传递出两个参数：异常信息和连续出现了几次异常    
+ ``` task.ExceptionEvent += HandleError;   ```
+
+
+
+
+
   
   
   
