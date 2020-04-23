@@ -293,13 +293,10 @@ namespace Collector
         public void Stop()
         {
             if (_IsRun)
-            {
-                if (_Chan != null)
-                {
-                    _Chan.Close();
-                }
+            {          
                 _IsRun = false;
             }
+          
         }
 
 
@@ -315,30 +312,44 @@ namespace Collector
             {
                 try
                 {
-                    if (!IsRun) return;
+                  
                     if (_Chan.GetState() == ChannelState.Closed)
                     {
                         _Chan.Open();
                     }
 
-                    DoWork();
+                    if (!DoWork())
+                    {
+                        return;
+                    }
+                   
                 }
                 catch (Exception ex)
                 {
                     ErrCount++;
                     ExceptionEvent?.Invoke(ex, ErrCount);
+                    if (!IsRun) return;
+                 
                     Thread.Sleep(ReConnectWaitMillisecond);
+                   
                 }
 
             }
         }
-        private void DoWork()
+        private bool DoWork()
         {
             while (true)
             {
 
-                if (!IsRun) return;
-                if (_Chan.GetState() == ChannelState.Closed) return;
+                if (!IsRun)
+                {
+                    if (_Chan != null)
+                    {
+                        _Chan.Close();
+                    }
+                    return false; 
+                }
+                if (_Chan.GetState() == ChannelState.Closed) return true;
 
                 if (AddTaskQueue.Count > 0)
                 {

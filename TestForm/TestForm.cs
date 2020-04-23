@@ -111,7 +111,7 @@ namespace TestForm
                 TestContext t = task.GetTask(s => { return s.TaskName.Equals(tb_taskName.Text); });
                 if (t.TaskName != null)
                 {
-                    MessageBox.Show(ModbusHelper.ByteToHexDataString(t.RX));
+                    MessageBox.Show(ModbusHelper.BytesToHexString(t.RX));
                 }
             }
         }

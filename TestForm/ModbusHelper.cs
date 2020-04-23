@@ -57,7 +57,7 @@ namespace TestForm
                 list.AddRange(crc);
                 result = list.ToArray();
             }
-            string s = ByteToHexDataString(result);
+            string s = BytesToHexString(result);
             return result;
 
 

@@ -30,7 +30,8 @@ namespace Collector.Channel
 
         public override bool Close()
         {
-            client.Disconnect(true);
+
+            client.Close();
             client.Dispose();
             return true;
         }
@@ -72,7 +73,11 @@ namespace Collector.Channel
             byte[] buf = new byte[NumBytes];
             byte[] outBuf;
             int a = client.Receive(buf, SocketFlags.None);
-          
+
+
+
+
+
             outBuf = new byte[a];
             Array.Copy(buf, outBuf, a);
             return outBuf;
