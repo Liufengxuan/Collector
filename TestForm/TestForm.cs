@@ -382,5 +382,15 @@ namespace TestForm
             ModbusHelper.DataUnPackingToShort(ModbusHelper.ModbusType.RTU, a);
             ModbusHelper.DataUnPackingToShort(ModbusHelper.ModbusType.Tcp, b);
         }
+
+        private void button2_MouseDown(object sender, MouseEventArgs e)
+        {
+            button2_Click(null, null);
+        }
+
+        private void button2_MouseUp(object sender, MouseEventArgs e)
+        {
+            button2_Click(null, null);
+        }
     }
 }

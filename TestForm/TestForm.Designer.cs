@@ -146,7 +146,8 @@
             this.button2.TabIndex = 12;
             this.button2.Text = "添加";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button2_MouseDown);
+            this.button2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button2_MouseUp);
             // 
             // btn_addtask
             // 
