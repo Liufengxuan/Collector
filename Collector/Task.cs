@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -280,7 +281,7 @@ namespace Collector
             {
                 if (WorkThread != null)
                 {
-                    while (WorkThread.ThreadState == ThreadState.Running)
+                    while (WorkThread.ThreadState == System.Threading.ThreadState.Running)
                     {
                         continue;
                     }
@@ -321,7 +322,10 @@ namespace Collector
                   
                     if (_Chan.GetState() == ChannelState.Closed)
                     {
-                        _Chan.Open();
+                        if (!_Chan.Open())
+                        {
+                            throw new Exception(string.Format("{0}建立连接失败",_Chan.GetChannelType()));
+                        }
                     }
 
                     if (!DoWork())
@@ -342,11 +346,13 @@ namespace Collector
 
             }
         }
+
+       
         private bool DoWork()
         {
             while (true)
             {
-
+             
                 if (!IsRun)
                 {
                     if (_Chan != null)
@@ -371,7 +377,7 @@ namespace Collector
 
 
 
-
+               
 
                 T temp = default(T);
                 if (FirstTaskQueue.Count > 0)
@@ -403,7 +409,7 @@ namespace Collector
                 }
 
                 ErrCount = 0;
-
+               
             }
         }
 
