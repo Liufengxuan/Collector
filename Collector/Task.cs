@@ -13,7 +13,7 @@ using Collector.Channel;
 namespace Collector
 {
 
-    public class Task<T> where T : ITaskContext
+    public sealed class Task<T> where T : ITaskContext
     {
         /// <summary>
         /// 创建一个工作任务单元
@@ -393,7 +393,7 @@ namespace Collector
                     }
                     temp.IsSuccess = false;
                     _Chan.Write(temp.GetTX());
-                    temp.SetRX(_Chan.Read(256));
+                    temp.SetRX(_Chan.Read(128));
                     temp.IsSuccess = true;
                     AddOrUpdateTask(temp);
                 }

@@ -137,7 +137,7 @@ namespace TestForm
             t.TaskName = tb_taskName.Text;
             t.TX = a;
             t.ExecuteOnce = true;//只发送一次  ！：如果不为ture 这个任务会被循环执行
-            t.Priority = TaskPriority.High;//即刻发送  ！：设置优先级使这个任务立即被执行一次，然后不管会不会成功 这个任务都会被降级为普通任务
+            t.Priority = TaskPriority.Normal;//即刻发送  ！：设置优先级使这个任务立即被执行一次，然后不管会不会成功 这个任务都会被降级为普通任务
             t.IsTempTask = true;//临时任务 ：在调用查找该任务的同时会把该任务删除  ！：在查找方法返回结果值后、这个被查找的任务就被删除掉了
             if (task != null)
             {
