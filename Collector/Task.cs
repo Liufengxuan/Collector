@@ -399,7 +399,7 @@ namespace Collector
                     }
                     temp.IsSuccess = false;
                     _Chan.Write(temp.GetTX());
-                    temp.SetRX(_Chan.Read(128));
+                    temp.SetRX(_Chan.Read(128));          
                     temp.IsSuccess = true;
                     AddOrUpdateTask(temp);
                 }
