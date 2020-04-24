@@ -1,6 +1,6 @@
-这是一个上位机通讯组件  
+这是一个上位机与下位轮询通讯的组件  
 
-他适用于符合以下条件的上位机开发。  
+适用于符合以下条件的上位机开发。  
 1、使用串口通讯和网口TCP/IP协议通讯；  
 2、需要实时读取下位状态信息、和发送控制指令；  
 
@@ -15,14 +15,17 @@ StopBits=1
 ByteSize=8  
 BaudRate=57600  
 Parity=0  
+ReadTimeOut=20  
+WriteTimeOut=20  
 
 [TCPService]#网口的参数  
 IP=192.168.4.100  
 Prot=8139  
-
-[Common]  
 ReadTimeOut=20  
 WriteTimeOut=20  
+
+[Common]  
+ 
 #当与设备连接断开至下次重新连接的间隔时间 毫秒  
   
 ReConnectWaitMillisecond=40 
