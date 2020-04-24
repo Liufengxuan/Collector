@@ -345,7 +345,7 @@ namespace Collector
             }
         }
 
-      private  Stopwatch sw = new Stopwatch();
+    
         private bool DoWork()
         {
             while (true)
@@ -379,12 +379,12 @@ namespace Collector
 
                 T temp = default(T);
                 if (FirstTaskQueue.Count > 0)
-                {
-                  
+                {                  
                     temp = FirstTaskQueue.Dequeue();
                     temp.Priority = TaskPriority.Normal;
                     temp.IsSuccess = false;
                     _Chan.Write(temp.GetTX());
+                    Thread.Sleep(1);
                     temp.SetRX(_Chan.Read(128));
                     temp.IsSuccess = true;                   
                     AddOrUpdateTask(temp);
@@ -396,11 +396,9 @@ namespace Collector
                         continue;
                     }
                     temp.IsSuccess = false;                   
-                    sw.Start();
                    _Chan.Write(temp.GetTX());
+                    Thread.Sleep(1);
                     temp.SetRX(_Chan.Read(128));
-                    sw.Stop();
-                    sw.Reset();
                     temp.IsSuccess = true;
                     AddOrUpdateTask(temp);
                 }
