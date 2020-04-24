@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -22,7 +23,7 @@ namespace Collector.Channel
       
 
         private SerialPortAPI SPapi = null;
-
+        private int ReadTimeOut=0;
 
         public override bool Close()
         {
@@ -30,8 +31,8 @@ namespace Collector.Channel
         }
         public override bool Open()
         {
-            SPapi.ReadTimeout = ReadTimeout;
-            SPapi.WriteTimeout = WriteTimeout;
+            ReadTimeOut = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "ReadTimeOut", ""));
+            SPapi.WriteTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "WriteTimeOut", ""));
             return SPapi.Open();
         }
 
@@ -47,17 +48,23 @@ namespace Collector.Channel
             }
         }
 
-     
 
+
+        private Stopwatch sw = new Stopwatch();
+        private List<byte> readList = new List<byte>();
         public override byte[] Read(int NumBytes)
         {
-           byte[] a=   SPapi.Read(NumBytes);
-            if (a.Length < 1)
+            readList.Clear();
+            sw.Reset();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < ReadTimeOut)
             {
-                throw new Exception("串口读取到的数据长度为0，如多次出现此异常、可能是因为串口已被关闭");
+                long a = sw.ElapsedMilliseconds;
+                readList.AddRange(SPapi.Read(NumBytes));
             }
-            return a;
-
+            SPapi.ClearPortData();
+            sw.Stop();         
+            return readList.ToArray();
         }
 
         public override int Write(byte[] WriteBytes)

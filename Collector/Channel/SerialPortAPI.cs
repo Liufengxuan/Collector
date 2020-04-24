@@ -371,7 +371,7 @@ namespace Collector.Channel
             // 设置通信超时时间
             GetCommTimeouts(hComm, ref ctoCommPort);
             ctoCommPort.ReadIntervalTimeout = UInt32.MaxValue;
-            ctoCommPort.ReadTotalTimeoutConstant = ReadTimeout ;
+            ctoCommPort.ReadTotalTimeoutConstant = 0 ;
             ctoCommPort.ReadTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutMultiplier =0;
             ctoCommPort.WriteTotalTimeoutConstant = WriteTimeout;

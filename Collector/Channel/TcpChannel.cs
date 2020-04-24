@@ -21,9 +21,8 @@ namespace Collector.Channel
 
         public TcpChannel()
         {
-         
-            //client.ReceiveTimeout = ReadTimeout;
-            //client.SendTimeout = writeTimeout;
+
+           
         }
 
 
@@ -62,8 +61,8 @@ namespace Collector.Channel
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IpAddress = Parameters.iniOper.ReadIniData("TCPService", "IP", "");
             Port = Convert.ToInt32(Parameters.iniOper.ReadIniData("TCPService", "Prot", ""));
-            client.ReceiveTimeout = ReadTimeout;
-            client.SendTimeout = WriteTimeout;
+            client.ReceiveTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("TCPService", "ReadTimeOut", ""));
+            client.SendTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("TCPService", "WriteTimeOut", ""));
             client.Connect(IPAddress.Parse(IpAddress), Port);
             return true;
         }

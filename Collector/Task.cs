@@ -338,16 +338,14 @@ namespace Collector
                 {
                     ErrCount++;
                     ExceptionEvent?.Invoke(ex, ErrCount);
-                    if (!IsRun) return;
-                 
-                    Thread.Sleep(ReConnectWaitMillisecond);
-                   
+                    if (!IsRun) return;                 
+                    Thread.Sleep(ReConnectWaitMillisecond);                   
                 }
 
             }
         }
 
-       
+      private  Stopwatch sw = new Stopwatch();
         private bool DoWork()
         {
             while (true)
@@ -387,7 +385,7 @@ namespace Collector
                     temp.Priority = TaskPriority.Normal;
                     temp.IsSuccess = false;
                     _Chan.Write(temp.GetTX());
-                    temp.SetRX(_Chan.Read(256));
+                    temp.SetRX(_Chan.Read(128));
                     temp.IsSuccess = true;                   
                     AddOrUpdateTask(temp);
                 }
@@ -397,9 +395,12 @@ namespace Collector
                     {
                         continue;
                     }
-                    temp.IsSuccess = false;
-                    _Chan.Write(temp.GetTX());
-                    temp.SetRX(_Chan.Read(128));          
+                    temp.IsSuccess = false;                   
+                    sw.Start();
+                   _Chan.Write(temp.GetTX());
+                    temp.SetRX(_Chan.Read(128));
+                    sw.Stop();
+                    sw.Reset();
                     temp.IsSuccess = true;
                     AddOrUpdateTask(temp);
                 }
@@ -407,7 +408,7 @@ namespace Collector
                 {
                     Thread.Sleep(20);
                 }
-
+               
                 ErrCount = 0;
                
             }

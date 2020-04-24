@@ -17,16 +17,16 @@ namespace Collector.Channel
         public BaseChannel()
         {
         
-            ReadTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("Common", "ReadTimeOut", ""));
-            WriteTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("Common", "WriteTimeOut", ""));
+            //ReadTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("Common", "ReadTimeOut", ""));
+            //WriteTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("Common", "WriteTimeOut", ""));
         }
 
 
 
 
 
-        public int ReadTimeout=20;
-        public int WriteTimeout = 20;
+        //public int ReadTimeout=20;
+        //public int WriteTimeout = 20;
 
 
         public abstract bool Open();
