@@ -26,6 +26,21 @@ namespace Collector.Channel
         }
 
 
+        /// <summary>
+        /// 此方法没有实现
+        /// </summary>
+        public override void ClearRecBuffer()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// 此方法没有实现
+        /// </summary>
+        public override void ClearSendBuffer()
+        {
+            return;
+        }
 
         public override bool Close()
         {

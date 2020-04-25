@@ -34,3 +34,9 @@ C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Debug\Collector.cs
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Debug\Collector.dll
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Debug\Collector.pdb
+C:\Users\LFX\Desktop\collectortr\Collector\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\collectortr\Collector\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.dll
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.pdb

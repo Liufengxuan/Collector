@@ -48,6 +48,10 @@ namespace Collector.Channel
         public abstract int Write(byte[] WriteBytes);
         public abstract ChannelState GetState();
 
-       
+
+        public abstract void ClearRecBuffer();
+        public abstract void ClearSendBuffer();
+
+
     }
 }

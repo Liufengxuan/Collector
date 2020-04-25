@@ -23,7 +23,7 @@ namespace Collector.Channel
       
 
         private SerialPortAPI SPapi = null;
-        private int ReadTimeOut=0;
+      
 
         public override bool Close()
         {
@@ -31,7 +31,7 @@ namespace Collector.Channel
         }
         public override bool Open()
         {
-            ReadTimeOut = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "ReadTimeOut", ""));
+            SPapi.ReadTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "ReadTimeOut", ""));
             SPapi.WriteTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "WriteTimeOut", ""));
             return SPapi.Open();
         }
@@ -50,21 +50,11 @@ namespace Collector.Channel
 
 
 
-        private Stopwatch sw = new Stopwatch();
-        private List<byte> readList = new List<byte>();
-        public override byte[] Read(int NumBytes)
+
+        public  override byte[] Read(int NumBytes)
         {
-            readList.Clear();
-            sw.Reset();
-            sw.Start();
-            while (sw.ElapsedMilliseconds < ReadTimeOut)
-            {
-                long a = sw.ElapsedMilliseconds;
-                readList.AddRange(SPapi.Read(NumBytes));
-            }
-            SPapi.ClearPortData();
-            sw.Stop();         
-            return readList.ToArray();
+            byte[] a = SPapi.Read(NumBytes);        
+            return a;
         }
 
         public override int Write(byte[] WriteBytes)
@@ -74,8 +64,22 @@ namespace Collector.Channel
 
         public override string GetChannelType()
         {
-            return "SerialPort";
-           
+            return "SerialPort";          
+        }
+
+        /// <summary>
+        /// 清空接收缓冲区
+        /// </summary>
+        public override void ClearRecBuffer()
+        {
+            SPapi.ClearReceiveBuf();
+        }
+        /// <summary>
+        /// 清空发送缓冲区
+        /// </summary>
+        public override void ClearSendBuffer()
+        {
+            SPapi.ClearSendBuf();
         }
     }
 }

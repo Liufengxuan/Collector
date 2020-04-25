@@ -25,7 +25,15 @@ namespace Collector.Channel
         /// 无效句柄
         /// </summary>
         private const int INVALID_HANDLE_VALUE = -1;
+        private const int PURGE_RXABORT = 0x2;
+        private const int PURGE_RXCLEAR = 0x8;
+        private const int PURGE_TXABORT = 0x1;
+        private const int PURGE_TXCLEAR = 0x4;
+
+        private const int ERROR_IO_PENDING = 0x3e5;
+        private const int ERROR_IO_INCOMPLETE = 0x3e4;
         #endregion
+
 
         #region 成员变量
         /// <summary>
@@ -371,7 +379,7 @@ namespace Collector.Channel
             // 设置通信超时时间
             GetCommTimeouts(hComm, ref ctoCommPort);
             ctoCommPort.ReadIntervalTimeout = UInt32.MaxValue;
-            ctoCommPort.ReadTotalTimeoutConstant = 0 ;
+            ctoCommPort.ReadTotalTimeoutConstant = ReadTimeout;
             ctoCommPort.ReadTotalTimeoutMultiplier = 0;
             ctoCommPort.WriteTotalTimeoutMultiplier =0;
             ctoCommPort.WriteTotalTimeoutConstant = WriteTimeout;
@@ -511,15 +519,28 @@ namespace Collector.Channel
                 return new byte[0];
             }
         }
+        #region 清除接收缓冲区
+        public void ClearReceiveBuf()
+        {
+            try
+            {
+                if (hComm != INVALID_HANDLE_VALUE)
+                {
+                    PurgeComm(hComm, PURGE_RXABORT | PURGE_RXCLEAR);
+                }
+            }
+            catch { }
+        }
+        #endregion
         /// <summary>
         /// 清空COM口缓冲区数据
         /// </summary>
         /// <returns></returns>
-        public bool ClearPortData()
+        public bool ClearSendBuf()
         {
             if (hComm != INVALID_HANDLE_VALUE)
             {
-                return PurgeComm(hComm, 0);
+                PurgeComm(hComm, PURGE_TXABORT | PURGE_TXCLEAR);
             }
             return false;
         }

@@ -16,6 +16,10 @@ namespace Collector
 
     public sealed class Task<T> where T : ITaskContext
     {
+        public delegate byte[] ReceiveAction(T t, BaseChannel channel);
+        public delegate int SendAction(T t, BaseChannel channel);
+        private ReceiveAction receiveAction = null;
+        private SendAction sendAction = null;
         /// <summary>
         /// 创建一个工作任务单元
         /// </summary>
@@ -23,6 +27,26 @@ namespace Collector
         public Task(BaseChannel channel)
         {
             _Chan = channel;
+            receiveAction = (x, y) => {
+                return y.Read(64);
+            };
+            sendAction = (x, y) =>{
+                return y.Write(x.GetTX());
+            };
+
+            cglock.DoWork();
+        }
+        /// <summary>
+        /// 创建一个工作任务单元 并指定读取流和写入流的实现
+        /// </summary>
+        /// <param name="channel"></param>
+        /// <param name="receiveFunc">自定义从缓冲区读取数据的方法</param>
+        /// <param name="sendFunc">自定义写入缓冲区数据的方法</param>
+        public Task(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc)
+        {
+            _Chan = channel;
+            receiveAction = receiveFunc;
+            sendAction = sendFunc;
             cglock.DoWork();
         }
 
@@ -36,6 +60,10 @@ namespace Collector
         private Queue<T> AddTaskQueue = new Queue<T>();
         private Queue<T> RemoveTaskQueue = new Queue<T>();
 
+
+        /// <summary>
+        /// 获取任务数量
+        /// </summary>
         public int TaskCount
         {
             get
@@ -43,6 +71,12 @@ namespace Collector
                 return TaskList.Count;
             }
         }
+
+        /// <summary>
+        /// 根据表达式查找符合条件的Task
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public T GetTask(Predicate<T> match)
         {
             T t= TaskList.Find(match);
@@ -71,6 +105,11 @@ namespace Collector
             //return false;
         }
 
+        /// <summary>
+        /// 根据表达式查找符合条件的Task集合
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public List<T> GetAllTask(Predicate<T> match)
         {
 
@@ -78,12 +117,19 @@ namespace Collector
              
         }
 
+        /// <summary>
+        /// 添加一个任务 ：只有在IsRun=true 时下才能扫描到你添加的任务
+        /// </summary>
+        /// <param name="t"></param>
         public void AddOrUpdateTaskToQueue(T t)
         {
             AddTaskQueue.Enqueue(t);
         }
 
-
+        /// <summary>
+        /// 删除一个任务 ：只有在IsRun=true 时下才能扫描到你要删除的任务
+        /// </summary>
+        /// <param name="t"></param>
         public void RemoveTaskToQueue(T t)
         {
             RemoveTaskQueue.Enqueue(t);
@@ -345,7 +391,9 @@ namespace Collector
             }
         }
 
-    
+     
+        Stopwatch sw = new Stopwatch();
+        private T temp = default(T);
         private bool DoWork()
         {
             while (true)
@@ -375,17 +423,17 @@ namespace Collector
 
 
 
-               
 
-                T temp = default(T);
+              
+                sw.Start();
+            
                 if (FirstTaskQueue.Count > 0)
                 {                  
                     temp = FirstTaskQueue.Dequeue();
                     temp.Priority = TaskPriority.Normal;
                     temp.IsSuccess = false;
-                    _Chan.Write(temp.GetTX());
-                    Thread.Sleep(1);
-                    temp.SetRX(_Chan.Read(128));
+                    sendAction(temp, _Chan);
+                    temp.SetRX(receiveAction(temp,_Chan));
                     temp.IsSuccess = true;                   
                     AddOrUpdateTask(temp);
                 }
@@ -395,10 +443,9 @@ namespace Collector
                     {
                         continue;
                     }
-                    temp.IsSuccess = false;                   
-                   _Chan.Write(temp.GetTX());
-                    Thread.Sleep(1);
-                    temp.SetRX(_Chan.Read(128));
+                    temp.IsSuccess = false;
+                    sendAction(temp, _Chan);
+                    temp.SetRX(receiveAction(temp, _Chan));
                     temp.IsSuccess = true;
                     AddOrUpdateTask(temp);
                 }
@@ -406,7 +453,8 @@ namespace Collector
                 {
                     Thread.Sleep(20);
                 }
-               
+                sw.Stop();
+                sw.Reset();
                 ErrCount = 0;
                
             }

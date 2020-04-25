@@ -70,3 +70,15 @@ C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\bin\Debug\TestForm.pdb
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\bin\Debug\Collector.dll
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\bin\Debug\Collector.pdb
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\obj\Debug\TestForm.csproj.CopyComplete
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Debug\TestForm.exe
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Debug\TestForm.pdb
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.Properties.Resources.resources
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.TestForm.resources
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.csproj.GenerateResource.cache
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.csproj.CopyComplete
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.exe
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.pdb
