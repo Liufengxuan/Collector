@@ -16,8 +16,8 @@ namespace Collector
 
     public sealed class Task<T> where T : ITaskContext
     {
-        public delegate byte[] ReceiveAction(T t, BaseChannel channel);
-        public delegate int SendAction(T t, BaseChannel channel);
+        public delegate byte[] ReceiveAction(ITaskContext t, BaseChannel channel);
+        public delegate int SendAction(ITaskContext t, BaseChannel channel);
         private ReceiveAction receiveAction = null;
         private SendAction sendAction = null;
         /// <summary>

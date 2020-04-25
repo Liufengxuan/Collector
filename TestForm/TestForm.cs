@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -80,15 +81,57 @@ namespace TestForm
             panel1.Enabled = true;
             task.Run();
         }
+
+
+        //public class ModbusRtuReceiveHelper
+        //{
+        //   private Stopwatch sw = new Stopwatch();
+        //   private int timeOut = 15;
+        //    public  byte[] Receive(Collector.ITaskContext t,Collector.Channel.BaseChannel channel)
+        //    {
+        //        byte[] sendByte = t.GetTX();
+        //        byte[] res = new byte[0];
+        //        List<byte> buf = new List<byte>();
+        //        sw.Reset();
+        //        sw.Start();
+        //        while (sw.ElapsedMilliseconds < timeOut)
+        //        {
+        //            buf.AddRange(channel.Read(16));
+
+        //            if (buf.Count > 2)
+        //            {
+        //                if (buf[0] == sendByte[0])
+        //            }
+
+        //        }
+        //        sw.Stop();
+        //    }
+
+        //}
+
+
+
+
+
+
+
+
+      
         private void btn_SPstart_Click(object sender, EventArgs e)
         {
+          
             btn_close_Click(null, null);
             task = new Task<TestContext>(new Collector.Channel.SerialChannel());
+                
+          
             task.ExceptionEvent += ShowMsg;
             modbusType = ModbusHelper.ModbusType.RTU;
             panel1.Enabled = true;
             task.Run();
         }
+   
+
+
         #endregion
 
         #region 删除一个任务Demo
