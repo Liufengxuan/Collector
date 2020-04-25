@@ -70,7 +70,7 @@ ReConnectWaitMillisecond=40
   
   
    ·第二种 需要传递一个通讯管道参数,一个从缓冲区读取的数据的委托和一个从写入缓冲区的委托方法  
-  ``` public Task(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc) 
+  ``` public Task(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc)  ```
   
       //如果你要自定义如何从缓冲区读取数据需要使用这个委托来实现：
       /*比如串口通讯需要自定义协议，串口返回的数据是多条粘在一起的、你需要把他们区分开，
