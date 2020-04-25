@@ -75,9 +75,9 @@ ReConnectWaitMillisecond=40
       //如果你要自定义如何从缓冲区读取数据需要使用这个委托来实现：
       /*比如串口通讯需要自定义协议，串口返回的数据是多条粘在一起的、你需要把他们区分开，
         就可以调用channel.read来读取判断有没有到你协议//中的结束符。*/
-  ``` public delegate byte[] ReceiveAction(T t, BaseChannel channel);
-      public delegate int SendAction(T t, BaseChannel channel); 
-  ```
+   ```public delegate byte[] ReceiveAction(T t, BaseChannel channel);  ```
+   ```public delegate int SendAction(T t, BaseChannel channel);   ```
+
       
     
   让任务跑起来     
