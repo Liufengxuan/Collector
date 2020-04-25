@@ -65,23 +65,23 @@ ReConnectWaitMillisecond=40
   
   ·第一种 需要传递一个通讯管道参数  
    可以是串口的管道和网口套接字管道  
-   ```  public Task(BaseChannel channel)```
+   ```  public Task(BaseChannel channel)```  
   
   
   
-   ·第二种 需要传递一个通讯管道参数,一个从缓冲区读取的数据的委托和一个从写入缓冲区的委托方法  
-  ``` public Task(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc)  ```
+   ·第二种 需要传递一个通讯管道参数,一个从缓冲区读取的数据的委托和一个从写入缓冲区的委托方法    
+  ``` public Task(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc)  ```  
   
-      //如果你要自定义如何从缓冲区读取数据需要使用这个委托来实现：
-      /*比如串口通讯需要自定义协议，串口返回的数据是多条粘在一起的、你需要把他们区分开，
-        就可以调用channel.read来读取判断有没有到你协议//中的结束符。*/
-   ```public delegate byte[] ReceiveAction(T t, BaseChannel channel);  ```
-   ```public delegate int SendAction(T t, BaseChannel channel);   ```
+      //如果你要自定义如何从缓冲区读取数据需要使用这个委托来实现：  
+      /*比如串口通讯需要自定义协议，串口返回的数据是多条粘在一起的、你需要把他们区分开，  
+        就可以调用channel.read来读取判断有没有到你协议//中的结束符。*/    
+   ```public delegate byte[] ReceiveAction(T t, BaseChannel channel);  ```    
+   ```public delegate int SendAction(T t, BaseChannel channel);   ```    
 
       
     
   让任务跑起来     
-  ``` task.Run();  ```
+  ``` task.Run();  ```  
  
  
 添加任务：  
