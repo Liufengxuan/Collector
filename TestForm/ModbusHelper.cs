@@ -163,10 +163,6 @@ namespace TestForm
         #endregion
 
 
-
-
-
-
         #region Byte数组 -> 16进制字符串
         public static string BytesToHexString(byte[] InBytes) //112233
         {

@@ -9,7 +9,11 @@ namespace TestForm
     public class ModbusRtuReceiveHelper
     {
         private static Stopwatch sw = new Stopwatch();
-        private static int timeOut = 15;
+
+        /// <summary>
+        /// 实际的超时时间为TimeOut+需要接收的字节数
+        /// </summary>
+        public static int TimeOut =8;
         private static int recLength = 0;
         private static byte[] res = new byte[0];
         private static byte[] sendByte;
@@ -25,6 +29,7 @@ namespace TestForm
         public static byte[] Receive(Collector.ITaskContext t, Collector.Channel.BaseChannel channel)
         {
             sendByte = t.GetTX();
+           
             buf.Clear();
             #region 
 
@@ -49,26 +54,29 @@ namespace TestForm
 
             sw.Reset();
             sw.Start();
-            while (sw.ElapsedMilliseconds < recLength)
+            while (sw.ElapsedMilliseconds < recLength+ TimeOut)
             {
-                buf.AddRange(channel.Read(64));
+                buf.AddRange(channel.Read(recLength));
 
                 if (buf.Count > 2) //判断返回的是否有错误
                 {
-                    if (buf[1] != sendByte[1]) return buf.ToArray();
+                    if (buf[1] != sendByte[1]) {
+                        channel.ClearRecBuffer();
+                        return buf.ToArray();
+                    }
                 }
                 if (buf.Count >= recLength)//接收完指定长度后，判断crc是否通过
                 {
                     sw.Stop();
-                    if (ModbusHelper.CheckDataCrc16(buf.ToArray()))
+                    if (!ModbusHelper.CheckDataCrc16(buf.ToArray())|| buf.Count!= recLength)
                     {
-                        res = buf.ToArray();
+                        channel.ClearRecBuffer();
                     }
                     break;
                 }
             }
             sw.Stop();
-            return res;
+            return buf.ToArray();
         }
      
     }
