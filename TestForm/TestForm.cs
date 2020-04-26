@@ -17,6 +17,12 @@ namespace TestForm
         public TestForm()
         {
             InitializeComponent();
+            //  TODO:  在  InitComponent  调用后添加任何初始化 
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //开启双缓冲
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         public struct TestContext : ITaskContext
@@ -94,8 +100,7 @@ namespace TestForm
 
 
         private void btn_SPstart_Click(object sender, EventArgs e)
-        {
-          
+        {       
             btn_close_Click(null, null);
             task = new Task<TestContext>(new Collector.Channel.SerialChannel(),ModbusRtuReceiveHelper.Receive,(x,y)=> { return y.Write(x.GetTX()); });         
             task.ExceptionEvent += ShowMsg;
@@ -128,7 +133,15 @@ namespace TestForm
                 TestContext t = task.GetTask(s => { return s.TaskName.Equals(tb_taskName.Text); });
                 if (t.TaskName != null)
                 {
-                    MessageBox.Show(ModbusHelper.BytesToHexString(t.RX));
+                    //  MessageBox.Show(ModbusHelper.BytesToHexString(t.RX));
+                    short[] a=  ModbusHelper.DataUnPackingToShort(modbusType, t.RX);
+                    if (a == null) return;
+                    string s ="";
+                    foreach (var item in a)
+                    {
+                        s += "      '" + item+"'";
+                    }
+                    label6 .Text= s;
                 }
             }
         }
@@ -330,13 +343,14 @@ namespace TestForm
                         
                     }
                 }
-         
+            btn_Find_Click(null, null);
             a = false;
 
-           
-           
-         
-          
+       
+
+
+
+
         }
         private void ShowMsg(string format)
         {
