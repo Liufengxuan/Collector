@@ -373,7 +373,7 @@ namespace Collector
                             throw new Exception(string.Format("{0}建立连接失败",_Chan.GetChannelType()));
                         }
                     }
-
+                    temp = default(T);
                     if (!DoWork())
                     {
                         return;
@@ -382,6 +382,7 @@ namespace Collector
                 }
                 catch (Exception ex)
                 {
+                    temp = default(T);
                     ErrCount++;
                     ExceptionEvent?.Invoke(ex, ErrCount);
                     if (!IsRun) return;                 
@@ -407,6 +408,21 @@ namespace Collector
                     }
                     return false; 
                 }
+
+                if (!string.IsNullOrEmpty(temp.TaskName))
+                {
+                    byte[] a = receiveAction(temp, _Chan);
+                    if (a.Length > 0)
+                    {
+                        temp.IsSuccess = true;
+
+                    }
+                    temp.SetRX(a);
+                    AddOrUpdateTask(temp);
+
+                }
+                temp = default(T);
+
                 if (_Chan.GetState() == ChannelState.Closed) return true;
 
                 if (AddTaskQueue.Count > 0)
@@ -420,12 +436,11 @@ namespace Collector
                     continue;
                 }
 
-
-
-
-
-              
              
+
+
+
+
                 _Chan.ClearRecBuffer();
                 _Chan.ClearSendBuffer();
                 if (FirstTaskQueue.Count > 0)
@@ -434,9 +449,9 @@ namespace Collector
                     temp.Priority = TaskPriority.Normal;
                     temp.IsSuccess = false;
                     sendAction(temp, _Chan);
-                    temp.SetRX(receiveAction(temp,_Chan));
-                    temp.IsSuccess = true;                   
-                    AddOrUpdateTask(temp);
+                    //temp.SetRX(receiveAction(temp,_Chan));
+                    //temp.IsSuccess = true;                   
+                    //AddOrUpdateTask(temp);
                 }
                 else if (GetNextTask(ref temp))
                 {
@@ -446,9 +461,9 @@ namespace Collector
                     }
                     temp.IsSuccess = false;
                     sendAction(temp, _Chan);
-                    temp.SetRX(receiveAction(temp, _Chan));
-                    temp.IsSuccess = true;
-                    AddOrUpdateTask(temp);
+                    //temp.SetRX(receiveAction(temp, _Chan));
+                    //temp.IsSuccess = true;
+                    //AddOrUpdateTask(temp);
                 }
                 else
                 {

@@ -270,10 +270,10 @@ namespace TestForm
                 {
                     task.Stop();
                 }
-                //else
-                //{
-                //    task.Run();
-                //}
+                else
+                {
+                    task.Run();
+                }
             }
             //   task = null;
         }
