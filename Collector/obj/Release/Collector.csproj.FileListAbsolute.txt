@@ -4,3 +4,8 @@ C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Release\Collector.
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Release\Collector.csproj.CoreCompileInputs.cache
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Release\Collector.dll
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\Collector\obj\Release\Collector.pdb
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Release\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Release\Collector.dll
+C:\Users\LFX\Desktop\collectortr\Collector\obj\Release\Collector.pdb
+C:\Users\LFX\Desktop\collectortr\Collector\bin\Release\Collector.dll
+C:\Users\LFX\Desktop\collectortr\Collector\bin\Release\Collector.pdb

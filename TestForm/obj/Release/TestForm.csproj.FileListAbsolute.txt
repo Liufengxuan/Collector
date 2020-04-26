@@ -10,3 +10,15 @@ C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\obj\Release\TestForm.cs
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\obj\Release\TestForm.csproj.CopyComplete
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\obj\Release\TestForm.exe
 C:\Users\LFX\Desktop\colloter\20200423-3 Device\TestForm\obj\Release\TestForm.pdb
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.Properties.Resources.resources
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.TestForm.resources
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.csproj.GenerateResource.cache
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.exe
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.pdb
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Release\TestForm.exe
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Release\TestForm.pdb
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Release\Collector.dll
+C:\Users\LFX\Desktop\collectortr\TestForm\bin\Release\Collector.pdb
+C:\Users\LFX\Desktop\collectortr\TestForm\obj\Release\TestForm.csproj.CopyComplete

@@ -572,7 +572,7 @@ namespace Collector
                             }
 
                         }
-                        catch (Exception ex)
+                        catch 
                         {
                             log += "命令2执行失败" + " | ";
                         }
@@ -583,7 +583,7 @@ namespace Collector
                         {
                             ToMail = cmdList[3];
                         }
-                        catch (Exception ex)
+                        catch 
                         {
 
                         }
