@@ -392,7 +392,7 @@ namespace Collector
         }
 
      
-        Stopwatch sw = new Stopwatch();
+     
         private T temp = default(T);
         private bool DoWork()
         {
@@ -425,8 +425,9 @@ namespace Collector
 
 
               
-                sw.Start();
-            
+             
+                _Chan.ClearRecBuffer();
+                _Chan.ClearSendBuffer();
                 if (FirstTaskQueue.Count > 0)
                 {                  
                     temp = FirstTaskQueue.Dequeue();
@@ -453,8 +454,7 @@ namespace Collector
                 {
                     Thread.Sleep(20);
                 }
-                sw.Stop();
-                sw.Reset();
+              
                 ErrCount = 0;
                
             }

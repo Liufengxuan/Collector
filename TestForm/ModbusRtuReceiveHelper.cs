@@ -61,7 +61,7 @@ namespace TestForm
                 if (buf.Count > 2) //判断返回的是否有错误
                 {
                     if (buf[1] != sendByte[1]) {
-                        channel.ClearRecBuffer();
+                        buf.Clear();
                         return buf.ToArray();
                     }
                 }
@@ -70,7 +70,7 @@ namespace TestForm
                     sw.Stop();
                     if (!ModbusHelper.CheckDataCrc16(buf.ToArray())|| buf.Count!= recLength)
                     {
-                        channel.ClearRecBuffer();
+                      
                     }
                     break;
                 }
