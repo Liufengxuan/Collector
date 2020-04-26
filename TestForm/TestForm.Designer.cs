@@ -165,7 +165,7 @@
             this.tb_Code.Items.AddRange(new object[] {
             "03",
             "06",
-            "0A"});
+            "16"});
             this.tb_Code.Location = new System.Drawing.Point(207, 298);
             this.tb_Code.Name = "tb_Code";
             this.tb_Code.Size = new System.Drawing.Size(121, 20);

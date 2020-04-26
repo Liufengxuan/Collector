@@ -293,7 +293,7 @@ namespace TestForm
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private static bool CheckDataCrc16(byte[] data)
+        public static bool CheckDataCrc16(byte[] data)
         {
             if (data.Length < 6)  return false;
             int len = data.Length - 2;

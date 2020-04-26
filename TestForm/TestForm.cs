@@ -83,31 +83,7 @@ namespace TestForm
         }
 
 
-        //public class ModbusRtuReceiveHelper
-        //{
-        //   private Stopwatch sw = new Stopwatch();
-        //   private int timeOut = 15;
-        //    public  byte[] Receive(Collector.ITaskContext t,Collector.Channel.BaseChannel channel)
-        //    {
-        //        byte[] sendByte = t.GetTX();
-        //        byte[] res = new byte[0];
-        //        List<byte> buf = new List<byte>();
-        //        sw.Reset();
-        //        sw.Start();
-        //        while (sw.ElapsedMilliseconds < timeOut)
-        //        {
-        //            buf.AddRange(channel.Read(16));
-
-        //            if (buf.Count > 2)
-        //            {
-        //                if (buf[0] == sendByte[0])
-        //            }
-
-        //        }
-        //        sw.Stop();
-        //    }
-
-        //}
+     
 
 
 
@@ -116,14 +92,12 @@ namespace TestForm
 
 
 
-      
+
         private void btn_SPstart_Click(object sender, EventArgs e)
         {
           
             btn_close_Click(null, null);
-            task = new Task<TestContext>(new Collector.Channel.SerialChannel());
-                
-          
+            task = new Task<TestContext>(new Collector.Channel.SerialChannel(),ModbusRtuReceiveHelper.Receive,(x,y)=> { return y.Write(x.GetTX()); });         
             task.ExceptionEvent += ShowMsg;
             modbusType = ModbusHelper.ModbusType.RTU;
             panel1.Enabled = true;
