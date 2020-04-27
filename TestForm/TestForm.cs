@@ -154,7 +154,7 @@ namespace TestForm
                         string s = "";
                         foreach (var item in a)
                         {
-                            s += "      '" + item + "'";
+                            s += ", " + item ;
                         }
                         label6.Text = s;
                     }

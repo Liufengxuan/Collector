@@ -98,6 +98,10 @@
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.btn_Find);
             this.panel1.Controls.Add(this.btn_RemoveTask);
             this.panel1.Controls.Add(this.button2);
@@ -116,7 +120,7 @@
             this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(12, 41);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1220, 574);
+            this.panel1.Size = new System.Drawing.Size(1220, 672);
             this.panel1.TabIndex = 3;
             // 
             // btn_Find
@@ -235,11 +239,14 @@
             // 
             // textBox2
             // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(418, 7);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(788, 557);
+            this.textBox2.Size = new System.Drawing.Size(788, 621);
             this.textBox2.TabIndex = 3;
             // 
             // btn_close
@@ -295,9 +302,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(46, 642);
+            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(3, 649);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.Size = new System.Drawing.Size(62, 16);
             this.label6.TabIndex = 5;
             this.label6.Text = "label6";
             // 
@@ -306,7 +315,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1244, 725);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);

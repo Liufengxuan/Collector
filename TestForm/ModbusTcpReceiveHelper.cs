@@ -20,8 +20,7 @@ namespace TestForm
         /// <returns></returns>
         public static byte[] Receive(Collector.ITaskContext t, Collector.Channel.BaseChannel channel)
         {
-            sw.Reset();
-            sw.Start();
+            sw.Restart();
             byte[] a=new byte[] { };
             while (sw.ElapsedMilliseconds<TimeOut)
             {

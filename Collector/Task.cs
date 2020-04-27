@@ -373,7 +373,7 @@ namespace Collector
                             throw new Exception(string.Format("{0}建立连接失败",_Chan.GetChannelType()));
                         }
                     }
-                    temp = default(T);
+                
                     if (!DoWork())
                     {
                         return;
@@ -382,7 +382,7 @@ namespace Collector
                 }
                 catch (Exception ex)
                 {
-                    temp = default(T);
+                
                     ErrCount++;
                     ExceptionEvent?.Invoke(ex, ErrCount);
                     if (!IsRun) return;                 
@@ -392,8 +392,8 @@ namespace Collector
             }
         }
 
-     
-     
+
+       
         private T temp = default(T);
         private bool DoWork()
         {
@@ -426,7 +426,7 @@ namespace Collector
 
 
 
-
+             
 
 
                 _Chan.ClearRecBuffer();
@@ -471,7 +471,7 @@ namespace Collector
                 {
                     Thread.Sleep(20);
                 }
-
+               
                 ErrCount = 0;
                 
                

@@ -52,8 +52,7 @@ namespace TestForm
             #endregion
 
 
-            sw.Reset();
-            sw.Start();
+            sw.Restart();
             while (sw.ElapsedMilliseconds < recLength + TimeOut)
             {
                 buf.AddRange(channel.Read(recLength));
@@ -86,6 +85,7 @@ namespace TestForm
             }
             if (ErrorCount > 3)
             {
+               
                 throw new Exception("串口多次未读取到数据、请检查通讯是否有问题");
             }
             return buf.ToArray();
