@@ -18,7 +18,7 @@ namespace TestForm
         private static byte[] res = new byte[0];
         private static byte[] sendByte;
         private static List<byte> buf = new List<byte>();
-
+        private static int ErrorCount=0;
 
         /// <summary>
         /// 如果返回的是错误码、抛出异常 ；其他情况返回空。
@@ -29,7 +29,7 @@ namespace TestForm
         public static byte[] Receive(Collector.ITaskContext t, Collector.Channel.BaseChannel channel)
         {
             sendByte = t.GetTX();
-           
+
             buf.Clear();
             #region 
 
@@ -54,7 +54,7 @@ namespace TestForm
 
             sw.Reset();
             sw.Start();
-            while (sw.ElapsedMilliseconds < recLength+ TimeOut)
+            while (sw.ElapsedMilliseconds < recLength + TimeOut)
             {
                 buf.AddRange(channel.Read(recLength));
 
@@ -68,16 +68,33 @@ namespace TestForm
                 if (buf.Count >= recLength)//接收完指定长度后，判断crc是否通过
                 {
                     sw.Stop();
-                    if (!ModbusHelper.CheckDataCrc16(buf.ToArray())|| buf.Count!= recLength)
+                    if (!ModbusHelper.CheckDataCrc16(buf.ToArray()) || buf.Count != recLength)
                     {
-                      
+
                     }
                     break;
                 }
             }
             sw.Stop();
+            if (buf.Count > 0)
+            {
+                ErrorCount = 0;
+            }
+            else
+            {
+                ErrorCount++;
+            }
+            if (ErrorCount > 3)
+            {
+                throw new Exception("串口多次未读取到数据、请检查通讯是否有问题");
+            }
             return buf.ToArray();
         }
-     
+
+        public static int Send(Collector.ITaskContext t, Collector.Channel.BaseChannel channel)
+        {
+            return channel.Write(t.GetTX());
+        }
+
     }
 }

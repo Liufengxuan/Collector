@@ -409,19 +409,7 @@ namespace Collector
                     return false; 
                 }
 
-                if (!string.IsNullOrEmpty(temp.TaskName))
-                {
-                    byte[] a = receiveAction(temp, _Chan);
-                    if (a.Length > 0)
-                    {
-                        temp.IsSuccess = true;
-
-                    }
-                    temp.SetRX(a);
-                    AddOrUpdateTask(temp);
-
-                }
-                temp = default(T);
+            
 
                 if (_Chan.GetState() == ChannelState.Closed) return true;
 
@@ -436,7 +424,7 @@ namespace Collector
                     continue;
                 }
 
-             
+
 
 
 
@@ -449,6 +437,13 @@ namespace Collector
                     temp.Priority = TaskPriority.Normal;
                     temp.IsSuccess = false;
                     sendAction(temp, _Chan);
+                    byte[] a = receiveAction(temp, _Chan);
+                    if (a.Length > 0)
+                    {
+                        temp.IsSuccess = true;
+                    }
+                    temp.SetRX(a);
+                    AddOrUpdateTask(temp);
                     //temp.SetRX(receiveAction(temp,_Chan));
                     //temp.IsSuccess = true;                   
                     //AddOrUpdateTask(temp);
@@ -461,6 +456,13 @@ namespace Collector
                     }
                     temp.IsSuccess = false;
                     sendAction(temp, _Chan);
+                    byte[] a = receiveAction(temp, _Chan);
+                    if (a.Length > 0)
+                    {
+                        temp.IsSuccess = true;
+                    }
+                    temp.SetRX(a);
+                    AddOrUpdateTask(temp);
                     //temp.SetRX(receiveAction(temp, _Chan));
                     //temp.IsSuccess = true;
                     //AddOrUpdateTask(temp);
@@ -469,8 +471,9 @@ namespace Collector
                 {
                     Thread.Sleep(20);
                 }
-              
+
                 ErrCount = 0;
+                
                
             }
         }

@@ -40,3 +40,9 @@ C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.csprojAssemblyRef
 C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
 C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.dll
 C:\Users\LFX\Desktop\collectortr\Collector\obj\Debug\Collector.pdb
+C:\Users\LFX\Desktop\新建文件夹\Collector\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\新建文件夹\Collector\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.dll
+C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.pdb

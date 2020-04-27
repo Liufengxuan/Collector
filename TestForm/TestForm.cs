@@ -80,8 +80,15 @@ namespace TestForm
         #region 初始化任务执行容器
         private void btn_TCPStart_Click(object sender, EventArgs e)
         {
-            btn_close_Click(null, null);
-            task = new Task<TestContext>(new Collector.Channel.TcpChannel());//创建任务类并 给予一个数据通道
+            if (task != null)
+            {
+                if (task.IsRun)
+                {
+                    task.Stop();
+                }
+              
+            }
+            task = new Task<TestContext>(new Collector.Channel.TcpChannel(),ModbusTcpReceiveHelper.Receive,ModbusTcpReceiveHelper.Send);//创建任务类并 给予一个数据通道
             task.ExceptionEvent += ShowMsg;//订阅Collector 中出错抛出的异常
             modbusType = ModbusHelper.ModbusType.Tcp;
             panel1.Enabled = true;
@@ -100,9 +107,15 @@ namespace TestForm
 
 
         private void btn_SPstart_Click(object sender, EventArgs e)
-        {       
-            btn_close_Click(null, null);
-            task = new Task<TestContext>(new Collector.Channel.SerialChannel(),ModbusRtuReceiveHelper.Receive,(x,y)=> { return y.Write(x.GetTX()); });         
+        {
+            if (task != null)
+            {
+                if (task.IsRun)
+                {
+                    task.Stop();
+                }
+            }
+            task = new Task<TestContext>(new Collector.Channel.SerialChannel(),ModbusRtuReceiveHelper.Receive, ModbusRtuReceiveHelper.Send);         
             task.ExceptionEvent += ShowMsg;
             modbusType = ModbusHelper.ModbusType.RTU;
             panel1.Enabled = true;
@@ -127,23 +140,32 @@ namespace TestForm
         #region 查找任务Demo
         private void btn_Find_Click(object sender, EventArgs e)
         {
-            ///自定义表达式 查找这个任务
-            if (task != null)
+            try
             {
-                TestContext t = task.GetTask(s => { return s.TaskName.Equals(tb_taskName.Text); });
-                if (t.TaskName != null)
+                ///自定义表达式 查找这个任务
+                if (task != null)
                 {
-                    //  MessageBox.Show(ModbusHelper.BytesToHexString(t.RX));
-                    short[] a=  ModbusHelper.DataUnPackingToShort(modbusType, t.RX);
-                    if (a == null) return;
-                    string s ="";
-                    foreach (var item in a)
+                    TestContext t = task.GetTask(s => { return s.TaskName.Equals(tb_taskName.Text); });
+                    if (t.TaskName != null)
                     {
-                        s += "      '" + item+"'";
+                        //  MessageBox.Show(ModbusHelper.BytesToHexString(t.RX));
+                        short[] a = ModbusHelper.DataUnPackingToShort(modbusType, t.RX);
+                        if (a == null) return;
+                        string s = "";
+                        foreach (var item in a)
+                        {
+                            s += "      '" + item + "'";
+                        }
+                        label6.Text = s;
                     }
-                    label6 .Text= s;
                 }
+
             }
+            catch
+            {
+
+            }
+
         }
 
         #endregion

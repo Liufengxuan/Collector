@@ -112,6 +112,7 @@ namespace TestForm
         public static short[] DataUnPackingToShort(ModbusType modbusType, byte[] rx)
         {
             if (rx==null) return null;
+            if (rx.Length<2) return null;
             byte[] byfer=SplitData(modbusType, rx);
             if (byfer == null) return null;
             int dataLen = byfer.Length / 2;

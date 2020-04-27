@@ -31,6 +31,8 @@ namespace Collector.Channel
         /// </summary>
         public override void ClearRecBuffer()
         {
+            //byte[] buf = new byte[256];
+            //client.Receive(buf, SocketFlags.None);
             return;
         }
 

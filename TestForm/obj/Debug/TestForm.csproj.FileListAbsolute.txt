@@ -82,3 +82,15 @@ C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.csproj.CoreCompileI
 C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.csproj.CopyComplete
 C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.exe
 C:\Users\LFX\Desktop\collectortr\TestForm\obj\Debug\TestForm.pdb
+C:\Users\LFX\Desktop\新建文件夹\TestForm\bin\Debug\TestForm.exe
+C:\Users\LFX\Desktop\新建文件夹\TestForm\bin\Debug\TestForm.pdb
+C:\Users\LFX\Desktop\新建文件夹\TestForm\bin\Debug\Collector.dll
+C:\Users\LFX\Desktop\新建文件夹\TestForm\bin\Debug\Collector.pdb
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.csprojAssemblyReference.cache
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.Properties.Resources.resources
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.TestForm.resources
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.csproj.GenerateResource.cache
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.csproj.CoreCompileInputs.cache
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.csproj.CopyComplete
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.exe
+C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.pdb
