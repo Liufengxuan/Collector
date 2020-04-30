@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
+
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -233,7 +233,7 @@ namespace Collector
                     if (CurrentTask == 0||TaskList.Count==0) CurrentTask = -1;//当任务数为零时
                     else CurrentTask = 0;//当任务数不为零但是超过了任务总数
                 }
-                if (CurrentTask == 1) {PingSW.Restart(); }//通讯延迟的记录Timers0211
+                if (CurrentTask == 1) {PingSW.Reset();PingSW.Start(); }//通讯延迟的记录Timers0211
                 if (CurrentTask ==0) {PingSW.Stop();Ping = PingSW.ElapsedMilliseconds; }//通讯延迟的记录Timers0211
                 return CurrentTask;
             }
