@@ -20,6 +20,7 @@ namespace Collector
         public delegate int SendAction(ITaskContext t, BaseChannel channel);
         private ReceiveAction receiveAction = null;
         private SendAction sendAction = null;
+        public long Ping { get; private set; } = 0;
         /// <summary>
         /// 创建一个工作任务单元
         /// </summary>
@@ -58,7 +59,7 @@ namespace Collector
         //  private List<T> FirstTaskList = new List<T>();
         private Queue<T> FirstTaskQueue = new Queue<T>();
         private Queue<T> AddTaskQueue = new Queue<T>();
-        private Queue<T> RemoveTaskQueue = new Queue<T>();
+        private Queue<Predicate<T>> RemoveTaskQueue = new Queue<Predicate<T>>();
 
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Collector
             {
                 if (t.IsTempTask && t.IsSuccess)
                 {
-                    RemoveTaskToQueue(t);
+                    RemoveTaskToQueue((s)=> { return s.TaskName == t.TaskName; });
                 }
              
                 return t;
@@ -130,9 +131,9 @@ namespace Collector
         /// 删除一个任务 ：只有在IsRun=true 时下才能扫描到你要删除的任务
         /// </summary>
         /// <param name="t"></param>
-        public void RemoveTaskToQueue(T t)
+        public void RemoveTaskToQueue(Predicate<T> match)
         {
-            RemoveTaskQueue.Enqueue(t);
+            RemoveTaskQueue.Enqueue(match);
         }
         /// <summary>
         /// 添加一个任务、如果有TaskName相同的一条任务则会进行覆盖
@@ -169,25 +170,32 @@ namespace Collector
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        private bool RemoveTask(T t)
+        private bool RemoveTask(Predicate<T> match)
         {
             lock (TaskList)
             {
-                int rmIndex = -1;
-                for (int i = 0; i < TaskList.Count; i++)
+                //int rmIndex = -1;
+                //for (int i = 0; i < TaskList.Count; i++)
+                //{
+                //    if (TaskList[i].TaskName == t.TaskName)
+                //    {
+                //        rmIndex = i;
+                //        break;
+                //    }
+                //}
+                //if (rmIndex > -1)
+                //{
+                //    TaskList.RemoveAt(rmIndex);
+                //    return true;
+                //}
+                //return false;
+              int i=  TaskList.RemoveAll(match);
+                if (i == 0)
                 {
-                    if (TaskList[i].TaskName == t.TaskName)
-                    {
-                        rmIndex = i;
-                        break;
-                    }
+                    return false;
                 }
-                if (rmIndex > -1)
-                {
-                    TaskList.RemoveAt(rmIndex);
-                    return true;
-                }
-                return false;
+                return true;
+
             }
         }
 
@@ -196,7 +204,6 @@ namespace Collector
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-
         //private bool GetFirstTask(ref T t)
         //{
         //    if (FirstTaskQueue.Count>0)
@@ -212,7 +219,7 @@ namespace Collector
 
         #region 循环迭代器
         private int CurrentTask = -1;
-
+        private Stopwatch PingSW = new Stopwatch();//通讯延迟的记录Timers0211
         /// <summary>
         /// -1~TaskList.Count-1 
         /// </summary>
@@ -226,6 +233,8 @@ namespace Collector
                     if (CurrentTask == 0||TaskList.Count==0) CurrentTask = -1;//当任务数为零时
                     else CurrentTask = 0;//当任务数不为零但是超过了任务总数
                 }
+                if (CurrentTask == 1) {PingSW.Restart(); }//通讯延迟的记录Timers0211
+                if (CurrentTask ==0) {PingSW.Stop();Ping = PingSW.ElapsedMilliseconds; }//通讯延迟的记录Timers0211
                 return CurrentTask;
             }
         }
@@ -358,7 +367,8 @@ namespace Collector
 
         //************************************************************************************************************************************************************************
         #region 工作方法   
-        private int ErrCount = 0;
+        private int ErrCount = 0;//连续出错次数     
+        private T temp = default(T);//交换变量
         private void Daemon(object p1)
         {
             while (true)
@@ -393,8 +403,7 @@ namespace Collector
         }
 
 
-       
-        private T temp = default(T);
+     
         private bool DoWork()
         {
             while (true)
@@ -413,12 +422,12 @@ namespace Collector
 
                 if (_Chan.GetState() == ChannelState.Closed) return true;
 
-                if (AddTaskQueue.Count > 0)
+                if (AddTaskQueue.Count > 0)//添加队列优先执行
                 {
                     AddOrUpdateTask(AddTaskQueue.Dequeue());
                     continue;
                 }
-                if (RemoveTaskQueue.Count > 0)
+                if (RemoveTaskQueue.Count > 0)//删除队列优先执行
                 {
                     RemoveTask(RemoveTaskQueue.Dequeue());
                     continue;
@@ -426,12 +435,11 @@ namespace Collector
 
 
 
-             
 
 
                 _Chan.ClearRecBuffer();
                 _Chan.ClearSendBuffer();
-                if (FirstTaskQueue.Count > 0)
+                if (FirstTaskQueue.Count > 0)//高优先级指令优先执行
                 {                  
                     temp = FirstTaskQueue.Dequeue();
                     temp.Priority = TaskPriority.Normal;
@@ -448,7 +456,7 @@ namespace Collector
                     //temp.IsSuccess = true;                   
                     //AddOrUpdateTask(temp);
                 }
-                else if (GetNextTask(ref temp))
+                else if (GetNextTask(ref temp))//普通指令执行
                 {
                     if (temp.ExecuteOnce && temp.IsSuccess)
                     {
@@ -467,10 +475,12 @@ namespace Collector
                     //temp.IsSuccess = true;
                     //AddOrUpdateTask(temp);
                 }
-                else
+                else//没有通讯 时
                 {
                     Thread.Sleep(20);
                 }
+
+
                
                 ErrCount = 0;
                 

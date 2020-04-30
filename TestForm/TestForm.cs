@@ -133,7 +133,7 @@ namespace TestForm
             ///创建并指定taskname 然后添加进删除队列
             TestContext t = new TestContext();
             t.TaskName = tb_taskName.Text;
-            task.RemoveTaskToQueue(t);
+            task.RemoveTaskToQueue((s)=> { return s.TaskName == t.TaskName; });
         }
         #endregion
 
@@ -366,6 +366,8 @@ namespace TestForm
                     }
                 }
             btn_Find_Click(null, null);
+            label8.Text = task.Ping.ToString()+"毫秒";
+
             a = false;
 
        
