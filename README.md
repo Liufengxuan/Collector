@@ -131,6 +131,8 @@ ReConnectWaitMillisecond=40
 1、串口占用cpu资源过高：如果自己实现串口读取的超时、需要把串口api的readtimeout参数由0改为1。否则由于调用过快会非常占用cpu
 2、读取延迟过高：调试查看读取和接收委托方法
 
+![Image text](https://github.com/Liufengxuan/MasterPCCollector/blob/master/%E9%A1%B9%E7%9B%AE%E5%BA%94%E7%94%A81.jpg)
+
 
 
 
