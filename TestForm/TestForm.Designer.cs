@@ -263,7 +263,7 @@
             this.tb_Station.Name = "tb_Station";
             this.tb_Station.Size = new System.Drawing.Size(100, 21);
             this.tb_Station.TabIndex = 6;
-            this.tb_Station.Text = "0A";
+            this.tb_Station.Text = "01";
             // 
             // label2
             // 
@@ -334,7 +334,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "打开配置文件";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // TestForm
             // 

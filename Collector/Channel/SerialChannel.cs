@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.IO.Ports;
 using System.Text;
 
 namespace Collector.Channel
 {
     public class SerialChannel:BaseChannel
     {
-        public static object obj = null;
-        public SerialChannel() 
+        public  object obj = null;
+        public SerialChannel(byte stopBits,int portNum,byte byteSize,int baudRate,byte Parity,int readTimeOut ,int writeTimeOut) 
         {
             SerialPortAPI sp = new SerialPortAPI();
-          
-            sp.StopBits = Convert.ToByte(Parameters.iniOper.ReadIniData("SPService", "StopBits", ""));
-            sp.PortNum = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "PortNum", ""));
-            sp.ByteSize = Convert.ToByte(Parameters.iniOper.ReadIniData("SPService", "ByteSize", ""));
-            sp.BaudRate = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "BaudRate", ""));
-            sp.Parity = Convert.ToByte(Parameters.iniOper.ReadIniData("SPService", "Parity", ""));
+            sp.StopBits = stopBits;
+            sp.PortNum = portNum;
+            sp.ByteSize = byteSize;
+            sp.BaudRate = baudRate;
+            sp.Parity = Parity;
+            sp.ReadTimeout = readTimeOut;
+            sp.WriteTimeout = writeTimeOut;
             SPapi = sp;
         }
       
@@ -31,8 +32,7 @@ namespace Collector.Channel
         }
         public override bool Open()
         {
-            SPapi.ReadTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "ReadTimeOut", ""));
-            SPapi.WriteTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("SPService", "WriteTimeOut", ""));
+          
             return SPapi.Open();
         }
 

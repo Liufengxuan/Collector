@@ -13,16 +13,20 @@ namespace Collector.Channel
     /// </summary>
     public class TcpChannel : BaseChannel
     {
-        public static object obj = null;
+        public  object obj = null;
         public   Socket client = null;
         private string IpAddress = "";
         private int Port = 0;
-   
+        private int ReceiveTimeout, SendTimeout;
 
-        public TcpChannel()
+        public TcpChannel(string ip, int port, int sendTimeOut, int RecTimeOut)
         {
-
            
+            IpAddress = ip;
+            Port = port;
+           // client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ReceiveTimeout = RecTimeOut;
+            SendTimeout = sendTimeOut;
         }
 
 
@@ -75,12 +79,16 @@ namespace Collector.Channel
 
         public override bool Open()
         {
+            if (client != null)
+            {
+               // client.Disconnect(false);
+                client.Dispose();
+            }
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IpAddress = Parameters.iniOper.ReadIniData("TCPService", "IP", "");
-            Port = Convert.ToInt32(Parameters.iniOper.ReadIniData("TCPService", "Prot", ""));
-            client.ReceiveTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("TCPService", "ReadTimeOut", ""));
-            client.SendTimeout = Convert.ToInt32(Parameters.iniOper.ReadIniData("TCPService", "WriteTimeOut", ""));
+            client.ReceiveTimeout = ReceiveTimeout;
+            client.SendTimeout = SendTimeout;
             client.Connect(IPAddress.Parse(IpAddress), Port);
+            
             return true;
         }
 
@@ -89,10 +97,6 @@ namespace Collector.Channel
             byte[] buf = new byte[NumBytes];
             byte[] outBuf;
             int a = client.Receive(buf, SocketFlags.None);
-
-
-
-
 
             outBuf = new byte[a];
             Array.Copy(buf, outBuf, a);

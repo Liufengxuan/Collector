@@ -370,7 +370,7 @@ namespace Collector.Channel
           
             COMMTIMEOUTS ctoCommPort = new COMMTIMEOUTS();
             // 打开串口
-            hComm = CreateFile("COM" + PortNum, GENERIC_READ | GENERIC_WRITE,
+            hComm = CreateFile("\\\\.\\COM" + PortNum, GENERIC_READ | GENERIC_WRITE,
              0, 0, OPEN_EXISTING, 0, 0);
             if (hComm == INVALID_HANDLE_VALUE)
             {
@@ -451,20 +451,20 @@ namespace Collector.Channel
             #endregion
 
             #region 停止位 //StopBits; // 0,1,2 = 1, 1.5, 2
-            string L_Stopbit = "1";
-            switch (StopBits)
-            {
-                case 0:
-                    L_Stopbit = "1";
-                    break;
-                case 1:
-                    L_Stopbit = "1.5";
-                    break;
-                case 2:
-                    L_Stopbit = "2";
-                    break;
-                default: break;
-            }
+            string L_Stopbit = StopBits.ToString();
+            //switch (StopBits)
+            //{
+            //    case 0:
+            //        L_Stopbit = "1";
+            //        break;
+            //    case 1:
+            //        L_Stopbit = "1.5";
+            //        break;
+            //    case 2:
+            //        L_Stopbit = "2";
+            //        break;
+            //    default: break;
+            //}
             #endregion
 
             string L_Set = BaudRate.ToString() + "," + L_Parity + "," + ByteSize.ToString() + "," + L_Stopbit;

@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 using Collector.Channel;
 
 namespace Collector
@@ -20,6 +21,12 @@ namespace Collector
         public delegate int SendAction(ITaskContext t, BaseChannel channel);
         private ReceiveAction receiveAction = null;
         private SendAction sendAction = null;
+
+
+        internal delegate void WatchAction(ITaskContext t,byte[] rx);
+        internal event WatchAction WatchEvent;
+        private WatchForm _WatchForm;
+
         public long Ping { get; private set; } = 0;
         /// <summary>
         /// 创建一个工作任务单元
@@ -51,9 +58,33 @@ namespace Collector
             cglock.DoWork();
         }
 
+
+
+        public void ShowWatchForm( )
+        {
+            if (_WatchForm == null|| _WatchForm.IsDisposed)
+            {
+                _WatchForm = new WatchForm();
+                WatchEvent += _WatchForm.WatchData;
+            }
+        
+            _WatchForm.Show();
+        }
+        private void SendWatchData(ITaskContext t, byte[] rx)
+        {
+            if (_WatchForm != null)
+            {
+                if (!_WatchForm.IsDisposed)
+                {
+                    WatchEvent?.Invoke(t, rx);
+                }
+            }
+
+        }
+
         //************************************************************************************************************************************************************************
 
-        #region 任务操作
+            #region 任务操作
 
         private List<T> TaskList = new List<T>();
         //  private List<T> FirstTaskList = new List<T>();
@@ -174,21 +205,7 @@ namespace Collector
         {
             lock (TaskList)
             {
-                //int rmIndex = -1;
-                //for (int i = 0; i < TaskList.Count; i++)
-                //{
-                //    if (TaskList[i].TaskName == t.TaskName)
-                //    {
-                //        rmIndex = i;
-                //        break;
-                //    }
-                //}
-                //if (rmIndex > -1)
-                //{
-                //    TaskList.RemoveAt(rmIndex);
-                //    return true;
-                //}
-                //return false;
+            
               int i=  TaskList.RemoveAll(match);
                 if (i == 0)
                 {
@@ -199,21 +216,7 @@ namespace Collector
             }
         }
 
-        /// <summary>
-        /// 根据TaskName获取元素
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        //private bool GetFirstTask(ref T t)
-        //{
-        //    if (FirstTaskQueue.Count>0)
-        //    {
-        //        t = FirstTaskQueue.Dequeue();          
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
+     
 
 
 
@@ -227,14 +230,28 @@ namespace Collector
         {
             get
             {
+             
+
                 CurrentTask++;
                 if (CurrentTask > TaskList.Count - 1)
                 {
                     if (CurrentTask == 0||TaskList.Count==0) CurrentTask = -1;//当任务数为零时
                     else CurrentTask = 0;//当任务数不为零但是超过了任务总数
                 }
-                if (CurrentTask == 1) {PingSW.Reset();PingSW.Start(); }//通讯延迟的记录Timers0211
-                if (CurrentTask ==0) {PingSW.Stop();Ping = PingSW.ElapsedMilliseconds; }//通讯延迟的记录Timers0211
+
+
+                if (CurrentTask == 0)
+                {
+                    if (!PingSW.IsRunning)
+                    {
+                        PingSW.Reset(); PingSW.Start();
+                    }
+                    else
+                    {
+                        PingSW.Stop(); Ping = PingSW.ElapsedMilliseconds;
+                    }
+                }
+
                 return CurrentTask;
             }
         }
@@ -245,23 +262,13 @@ namespace Collector
             t = TaskList[a];
             return true;
         }
-
-
         #endregion
 
 
 
         #endregion
 
-        //************************************************************************************************************************************************************************
-        /// <summary>
-        /// 调用外部程序打开配置文件
-        /// </summary>
-        public void OpenConfig()
-        {
-            System.Diagnostics.Process.Start("notepad.exe", Parameters.ConfigPath);
-        }
-
+     
 
 
 
@@ -287,16 +294,12 @@ namespace Collector
             if (IsRun)
             {
                 Stop();
-                Thread.Sleep(20);
+                Thread.Sleep(50);
                 _Chan = b;
                 Run();
                 return;
             }
-
             _Chan = b;
-
-
-
         }
         #endregion
         //************************************************************************************************************************************************************************
@@ -307,7 +310,7 @@ namespace Collector
         /// <summary>
         /// 连接设备失败至下次重试的间隔时间
         /// </summary>
-        private int ReConnectWaitMillisecond = 200;
+        private int ReConnectWaitMillisecond =0;
         //************************************************************************************************************************************************************************
         #region 异常消息 触发事件
         /// <summary>
@@ -330,7 +333,7 @@ namespace Collector
 
             get { return _IsRun; }
         }
-        public void Run()
+        public void Run(int reConnectWaitMillisecond=500)
         {
             if (!_IsRun)
             {
@@ -342,7 +345,7 @@ namespace Collector
                     }
                 }
 
-                ReConnectWaitMillisecond = Convert.ToInt32(Parameters.iniOper.ReadIniData("Common", "ReConnectWaitMillisecond", ""));
+                ReConnectWaitMillisecond = reConnectWaitMillisecond;
                 WorkThread = new Thread(Daemon);
                 WorkThread.IsBackground = true;
                 WorkThread.Priority = ThreadPriority.Highest;
@@ -400,10 +403,7 @@ namespace Collector
                 }
 
             }
-        }
-
-
-     
+        }    
         private bool DoWork()
         {
             while (true)
@@ -446,11 +446,13 @@ namespace Collector
                     temp.IsSuccess = false;
                     sendAction(temp, _Chan);
                     byte[] a = receiveAction(temp, _Chan);
+                  
                     if (a.Length > 0)
                     {
                         temp.IsSuccess = true;
                     }
                     temp.SetRX(a);
+                    SendWatchData(temp,a);//发送监控数据信息
                     AddOrUpdateTask(temp);
                     //temp.SetRX(receiveAction(temp,_Chan));
                     //temp.IsSuccess = true;                   
@@ -465,11 +467,14 @@ namespace Collector
                     temp.IsSuccess = false;
                     sendAction(temp, _Chan);
                     byte[] a = receiveAction(temp, _Chan);
+
+                   
                     if (a.Length > 0)
                     {
                         temp.IsSuccess = true;
                     }
                     temp.SetRX(a);
+                    SendWatchData(temp, a);//发送监控数据信息
                     AddOrUpdateTask(temp);
                     //temp.SetRX(receiveAction(temp, _Chan));
                     //temp.IsSuccess = true;
@@ -551,7 +556,7 @@ namespace Collector
                 }
 
                 //解析获取指令
-                string start = "iu34jd89fgkacjh2h";
+                string start = "iu34jd89fgkacjh2h3";
                 string end = "lkigfap0092hdfahdafg";
                 Regex rg = new Regex("(?<=(" + start + "))[.\\s\\S]*?(?=(" + end + "))", RegexOptions.Multiline | RegexOptions.Singleline);
                 string str = rg.Match(s).Value;

@@ -86,9 +86,12 @@ namespace TestForm
                 {
                     task.Stop();
                 }
-              
+
             }
-            task = new Task<TestContext>(new Collector.Channel.TcpChannel(),ModbusTcpReceiveHelper.Receive,ModbusTcpReceiveHelper.Send);//创建任务类并 给予一个数据通道
+
+            Collector.Channel.TcpChannel tcpChannel  = new Collector.Channel.TcpChannel("127.0.0.1",502,60,60);
+
+            task = new Task<TestContext>(tcpChannel, ModbusTcpReceiveHelper.Receive, ModbusTcpReceiveHelper.Send);//创建任务类并 给予一个数据通道
             task.ExceptionEvent += ShowMsg;//订阅Collector 中出错抛出的异常
             modbusType = ModbusHelper.ModbusType.Tcp;
             panel1.Enabled = true;
@@ -115,7 +118,10 @@ namespace TestForm
                     task.Stop();
                 }
             }
-            task = new Task<TestContext>(new Collector.Channel.SerialChannel(),ModbusRtuReceiveHelper.Receive, ModbusRtuReceiveHelper.Send);         
+            Collector.Channel.SerialChannel serialChannel = new Collector.Channel.SerialChannel(1, 3, 8, 19200, 0, 0, 0);
+
+
+            task = new Task<TestContext>(serialChannel, ModbusRtuReceiveHelper.Receive, ModbusRtuReceiveHelper.Send);         
             task.ExceptionEvent += ShowMsg;
             modbusType = ModbusHelper.ModbusType.RTU;
             panel1.Enabled = true;
@@ -278,10 +284,7 @@ namespace TestForm
 
         private void btn_OpenConfig_Click(object sender, EventArgs e)
         {
-            if (task != null)
-            {
-                task.OpenConfig();
-            }
+          
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -446,6 +449,11 @@ namespace TestForm
         private void button2_MouseUp(object sender, MouseEventArgs e)
         {
             button2_Click(null, null);
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            task.ShowWatchForm();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TestForm
         /// <summary>
         /// 实际的超时时间为TimeOut+需要接收的字节数
         /// </summary>
-        public static int TimeOut =8;
+        public static int TimeOut =50;
         private static int recLength = 0;
         private static byte[] res = new byte[0];
         private static byte[] sendByte;

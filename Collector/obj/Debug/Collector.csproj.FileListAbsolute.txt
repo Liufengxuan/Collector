@@ -46,3 +46,11 @@ C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.csprojAssembl
 C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
 C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.dll
 C:\Users\LFX\Desktop\新建文件夹\Collector\obj\Debug\Collector.pdb
+D:\代码\Collector\Collector\bin\Debug\Collector.dll
+D:\代码\Collector\Collector\bin\Debug\Collector.pdb
+D:\代码\Collector\Collector\obj\Debug\Collector.csprojAssemblyReference.cache
+D:\代码\Collector\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+D:\代码\Collector\Collector\obj\Debug\Collector.dll
+D:\代码\Collector\Collector\obj\Debug\Collector.pdb
+D:\代码\Collector\Collector\obj\Debug\Collector.WatchForm.resources
+D:\代码\Collector\Collector\obj\Debug\Collector.csproj.GenerateResource.cache

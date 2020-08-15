@@ -94,3 +94,15 @@ C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.csproj.CoreComp
 C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.csproj.CopyComplete
 C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.exe
 C:\Users\LFX\Desktop\新建文件夹\TestForm\obj\Debug\TestForm.pdb
+D:\代码\Collector\TestForm\bin\Debug\TestForm.exe
+D:\代码\Collector\TestForm\bin\Debug\TestForm.pdb
+D:\代码\Collector\TestForm\bin\Debug\Collector.dll
+D:\代码\Collector\TestForm\bin\Debug\Collector.pdb
+D:\代码\Collector\TestForm\obj\Debug\TestForm.csprojAssemblyReference.cache
+D:\代码\Collector\TestForm\obj\Debug\TestForm.Properties.Resources.resources
+D:\代码\Collector\TestForm\obj\Debug\TestForm.TestForm.resources
+D:\代码\Collector\TestForm\obj\Debug\TestForm.csproj.GenerateResource.cache
+D:\代码\Collector\TestForm\obj\Debug\TestForm.csproj.CoreCompileInputs.cache
+D:\代码\Collector\TestForm\obj\Debug\TestForm.csproj.CopyComplete
+D:\代码\Collector\TestForm\obj\Debug\TestForm.exe
+D:\代码\Collector\TestForm\obj\Debug\TestForm.pdb
