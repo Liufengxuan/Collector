@@ -24,8 +24,9 @@ namespace Collector
         public void WatchData( ITaskContext t,byte[] rx)
         {
             if (cache.Count > 200)
-            {
-                cache.Clear();
+            {               
+                int rCount =  cache.Count-200;
+                cache.RemoveRange(0, rCount);
             }
             if (!timer_refresh.Enabled) return;
                 string time = $"*{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}.{DateTime.Now.Millisecond}\r\n";
@@ -42,31 +43,7 @@ namespace Collector
          
           //  ShowMsg(sb.ToString());          
         }
-      //  public bool StopRefresh = false;
-        //private void ShowMsg(string format)
-        //{
-        //    if (StopRefresh) return;
-        //    try
-        //    {
-        //        if (textBox1.InvokeRequired)
-        //        {
-        //            textBox1.Invoke(new Action(() => { ShowMsg(format); }));
-        //            return;
-        //        }
-
-        //        textBox1.AppendText(format);
-        //        textBox1.ScrollToCaret();
-
-        //    }
-        //    catch
-        //    {
-                
-        //    }
-              
-                
-
-         
-        //}
+    
 
     
         
