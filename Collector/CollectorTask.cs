@@ -15,11 +15,12 @@ using Collector.Channel;
 namespace Collector
 {
 
-    public sealed class Task<T> where T : ITaskContext
+    public sealed class CollectorTask<T> where T : ITaskContext
     {
         public delegate byte[] ReceiveAction(ITaskContext t, BaseChannel channel);
         public delegate int SendAction(ITaskContext t, BaseChannel channel);
         private ReceiveAction receiveAction = null;
+
         private SendAction sendAction = null;
 
 
@@ -32,7 +33,7 @@ namespace Collector
         /// 创建一个工作任务单元
         /// </summary>
         /// <param name="channel"></param>
-        public Task(BaseChannel channel)
+        public CollectorTask(BaseChannel channel)
         {
             _Chan = channel;
             receiveAction = (x, y) => {
@@ -50,7 +51,7 @@ namespace Collector
         /// <param name="channel"></param>
         /// <param name="receiveFunc">自定义从缓冲区读取数据的方法</param>
         /// <param name="sendFunc">自定义写入缓冲区数据的方法</param>
-        public Task(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc)
+        public CollectorTask(BaseChannel channel,ReceiveAction receiveFunc,SendAction sendFunc)
         {
             _Chan = channel;
             receiveAction = receiveFunc;

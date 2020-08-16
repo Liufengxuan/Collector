@@ -1,0 +1,13 @@
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.csprojAssemblyReference.cache
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.Form1.resources
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.Properties.Resources.resources
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.csproj.GenerateResource.cache
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.csproj.CoreCompileInputs.cache
+D:\代码\Collector\TestForm2\bin\Debug\TestForm2.exe.config
+D:\代码\Collector\TestForm2\bin\Debug\TestForm2.exe
+D:\代码\Collector\TestForm2\bin\Debug\TestForm2.pdb
+D:\代码\Collector\TestForm2\bin\Debug\Collector.dll
+D:\代码\Collector\TestForm2\bin\Debug\Collector.pdb
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.csproj.CopyComplete
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.exe
+D:\代码\Collector\TestForm2\obj\Debug\TestForm2.pdb

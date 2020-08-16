@@ -23,13 +23,14 @@ namespace Collector
 
         public void WatchData( ITaskContext t,byte[] rx)
         {
+        
+            if (!timer_refresh.Enabled) return;
             if (cache.Count > 200)
-            {               
-                int rCount =  cache.Count-200;
+            {
+                int rCount = cache.Count - 200;
                 cache.RemoveRange(0, rCount);
             }
-            if (!timer_refresh.Enabled) return;
-                string time = $"*{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}.{DateTime.Now.Millisecond}\r\n";
+            string time = $"*{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second}.{DateTime.Now.Millisecond}\r\n";
             sb.Clear();
             sb.Append(time);
             sb.Append($" 任务名={t.TaskName}\r\n");

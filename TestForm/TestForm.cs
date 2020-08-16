@@ -86,7 +86,6 @@ namespace TestForm
                 {
                     task.Stop();
                 }
-
             }
 
             Collector.Channel.TcpChannel tcpChannel  = new Collector.Channel.TcpChannel("127.0.0.1",502,60,60);

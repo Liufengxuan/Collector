@@ -51,8 +51,15 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IniOper.cs" />
+    <Compile Include="ModbusHelper\IModbusReceive.cs" />
+    <Compile Include="ModbusHelper\ModbusCvt.cs" />
+    <Compile Include="ModbusHelper\ModbusRtuReceive.cs" />
+    <Compile Include="ModbusHelper\ModbusTcpReceive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskContext.cs" />
+    <Compile Include="TaskHelper.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -77,6 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Collector\Collector.csproj">
+      <Project>{6008db23-8c14-4f48-a286-285e173e59b6}</Project>
+      <Name>Collector</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

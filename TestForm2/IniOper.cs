@@ -5,9 +5,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Collector
+namespace TestForm2
 {
-    internal class IniOper
+    public class IniOper
     {
         public string iniFilePath = "";
 
