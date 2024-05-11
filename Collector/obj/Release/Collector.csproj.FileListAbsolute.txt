@@ -9,3 +9,11 @@ C:\Users\LFX\Desktop\collectortr\Collector\obj\Release\Collector.dll
 C:\Users\LFX\Desktop\collectortr\Collector\obj\Release\Collector.pdb
 C:\Users\LFX\Desktop\collectortr\Collector\bin\Release\Collector.dll
 C:\Users\LFX\Desktop\collectortr\Collector\bin\Release\Collector.pdb
+E:\蓝象\Collector-master\Collector\bin\Release\Collector.dll
+E:\蓝象\Collector-master\Collector\bin\Release\Collector.pdb
+E:\蓝象\Collector-master\Collector\obj\Release\Collector.csproj.AssemblyReference.cache
+E:\蓝象\Collector-master\Collector\obj\Release\Collector.WatchForm.resources
+E:\蓝象\Collector-master\Collector\obj\Release\Collector.csproj.GenerateResource.cache
+E:\蓝象\Collector-master\Collector\obj\Release\Collector.csproj.CoreCompileInputs.cache
+E:\蓝象\Collector-master\Collector\obj\Release\Collector.dll
+E:\蓝象\Collector-master\Collector\obj\Release\Collector.pdb

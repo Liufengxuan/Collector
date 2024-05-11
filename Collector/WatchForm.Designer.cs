@@ -118,6 +118,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "WatchForm";
             this.Text = "监控窗口";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WatchForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WatchForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

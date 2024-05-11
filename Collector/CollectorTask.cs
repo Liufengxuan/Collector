@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Diagnostics;
@@ -43,7 +44,7 @@ namespace Collector
                 return y.Write(x.GetTX());
             };
 
-            cglock.DoWork();
+            //cglock.DoWork();
         }
         /// <summary>
         /// 创建一个工作任务单元 并指定读取流和写入流的实现
@@ -56,7 +57,7 @@ namespace Collector
             _Chan = channel;
             receiveAction = receiveFunc;
             sendAction = sendFunc;
-            cglock.DoWork();
+           // cglock.DoWork();
         }
 
 
@@ -89,9 +90,9 @@ namespace Collector
 
         private List<T> TaskList = new List<T>();
         //  private List<T> FirstTaskList = new List<T>();
-        private Queue<T> FirstTaskQueue = new Queue<T>();
-        private Queue<T> AddTaskQueue = new Queue<T>();
-        private Queue<Predicate<T>> RemoveTaskQueue = new Queue<Predicate<T>>();
+        private ConcurrentQueue<T> FirstTaskQueue = new ConcurrentQueue<T>();
+        private ConcurrentQueue<T> AddTaskQueue = new ConcurrentQueue<T>();
+        private ConcurrentQueue<Predicate<T>> RemoveTaskQueue = new ConcurrentQueue<Predicate<T>>();
 
 
         /// <summary>
@@ -425,15 +426,28 @@ namespace Collector
 
                 if (AddTaskQueue.Count > 0)//添加队列优先执行
                 {
-                    AddOrUpdateTask(AddTaskQueue.Dequeue());
+                    T tt;
+                    if (AddTaskQueue.TryDequeue(out tt))
+                    {
+                        AddOrUpdateTask(tt);
+                    }
+                    
+
+
+                   
                     continue;
                 }
                 if (RemoveTaskQueue.Count > 0)//删除队列优先执行
                 {
-                    RemoveTask(RemoveTaskQueue.Dequeue());
+                    Predicate<T> tt;
+                    if (RemoveTaskQueue.TryDequeue(out tt))
+                    {
+                        RemoveTask(tt);
+                    }
+                    //RemoveTask(RemoveTaskQueue.Dequeue());
                     continue;
                 }
-
+                RemoveTask(t => { return t.ExecuteOnce_Del && t.IsSuccess; });
 
 
 
@@ -441,23 +455,29 @@ namespace Collector
                 _Chan.ClearRecBuffer();
                 _Chan.ClearSendBuffer();
                 if (FirstTaskQueue.Count > 0)//高优先级指令优先执行
-                {                  
-                    temp = FirstTaskQueue.Dequeue();
-                    temp.Priority = TaskPriority.Normal;
-                    temp.IsSuccess = false;
-                    sendAction(temp, _Chan);
-                    byte[] a = receiveAction(temp, _Chan);
-                  
-                    if (a.Length > 0)
+                {
+                   
+                    if (FirstTaskQueue.TryDequeue(out temp))
                     {
-                        temp.IsSuccess = true;
+                        //temp = FirstTaskQueue.Dequeue();
+                        temp.Priority = TaskPriority.Normal;
+                        temp.IsSuccess = false;
+                        sendAction(temp, _Chan);
+                        byte[] a = receiveAction(temp, _Chan);
+
+                        if (a.Length > 0)
+                        {
+                            temp.IsSuccess = true;
+                        }
+                        temp.SetRX(a);
+                        SendWatchData(temp, a);//发送监控数据信息
+                        AddOrUpdateTask(temp);
+                        //temp.SetRX(receiveAction(temp,_Chan));
+                        //temp.IsSuccess = true;                   
+                        //AddOrUpdateTask(temp);
                     }
-                    temp.SetRX(a);
-                    SendWatchData(temp,a);//发送监控数据信息
-                    AddOrUpdateTask(temp);
-                    //temp.SetRX(receiveAction(temp,_Chan));
-                    //temp.IsSuccess = true;                   
-                    //AddOrUpdateTask(temp);
+
+
                 }
                 else if (GetNextTask(ref temp))//普通指令执行
                 {

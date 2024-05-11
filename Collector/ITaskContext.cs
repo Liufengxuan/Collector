@@ -41,6 +41,11 @@ namespace Collector
         /// </summary>
         bool ExecuteOnce { get; set; }
 
+        /// <summary>
+        /// 是否只通信一次、如果通信成功IsSuccess=true 则自动删除。
+        /// </summary>
+        bool ExecuteOnce_Del { get; set; }
+
 
         /// <summary>
         /// 获取要发送的byte[]

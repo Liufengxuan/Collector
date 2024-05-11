@@ -13,6 +13,8 @@ namespace Collector
 {
     internal partial class WatchForm : Form
     {
+     
+
         public WatchForm()
         {
             InitializeComponent();
@@ -20,6 +22,7 @@ namespace Collector
         StringBuilder sb = new StringBuilder();
         List<string> cache = new List<string>();
 
+   
 
         public void WatchData( ITaskContext t,byte[] rx)
         {
@@ -65,13 +68,15 @@ namespace Collector
         private void btn_Clear_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
+            cache.Clear();
         }
 
         private void timer_refresh_Tick(object sender, EventArgs e)
         {
           
-                timer_refresh.Enabled = false;
+            timer_refresh.Enabled = false;
             textBox1.Clear();
+
             StringBuilder sb = new StringBuilder();
             if (!string.IsNullOrEmpty(textBox_Search.Text))
                 {
@@ -118,6 +123,11 @@ namespace Collector
             textBox1.ScrollToCaret();
             if (!timer_refresh.Enabled) { btn_StopRefresh.Text = "继续更新"; btn_StopRefresh.BackColor = Color.Red; }
             if (timer_refresh.Enabled) { btn_StopRefresh.Text = "停止更新"; btn_StopRefresh.BackColor = Color.Green; }
+        }
+
+        private void WatchForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+        
         }
     }
 }
