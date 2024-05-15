@@ -61,3 +61,11 @@ E:\蓝象\Collector-master\Collector\obj\Debug\Collector.csproj.GenerateResource
 E:\蓝象\Collector-master\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
 E:\蓝象\Collector-master\Collector\obj\Debug\Collector.dll
 E:\蓝象\Collector-master\Collector\obj\Debug\Collector.pdb
+E:\蓝象\Collector-master\Collector\Collector\bin\Debug\Collector.dll
+E:\蓝象\Collector-master\Collector\Collector\bin\Debug\Collector.pdb
+E:\蓝象\Collector-master\Collector\Collector\obj\Debug\Collector.csproj.AssemblyReference.cache
+E:\蓝象\Collector-master\Collector\Collector\obj\Debug\Collector.WatchForm.resources
+E:\蓝象\Collector-master\Collector\Collector\obj\Debug\Collector.csproj.GenerateResource.cache
+E:\蓝象\Collector-master\Collector\Collector\obj\Debug\Collector.csproj.CoreCompileInputs.cache
+E:\蓝象\Collector-master\Collector\Collector\obj\Debug\Collector.dll
+E:\蓝象\Collector-master\Collector\Collector\obj\Debug\Collector.pdb
